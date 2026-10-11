@@ -1,0 +1,22 @@
+# El profe solo despliega en Vercel, pero agregamos CI porque detecta errores de lint o build antes de fusionar el PR
+name: CI
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read # permisos mínimos: el flujo solo necesita leer el código
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22 # Vite exige Node 20.19+ o 22.12+
+          cache: npm
+      - run: npm ci # instala exactamente lo del package-lock.json
+      - run: npm run lint --if-present
+      - run: npm run build
