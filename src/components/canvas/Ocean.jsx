@@ -30,18 +30,23 @@ export default function Ocean() {
   return (
     
     <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]} receiveShadow >
-      <planeGeometry args={[1000, 1000, 80, 80]} />
+      <planeGeometry args={[1000, 1000, 128, 128]} />
       <meshPhysicalMaterial
-        color="#17b8df"
-        roughness={0.08}
-        metalness={0.05}
+        color="#65d6f2"
+        roughness={0.15}
+        metalness={0.02}
         transmission={0.30}
-        thickness={2.0}
+        thickness={5.0}
         ior={1.333}          
         transparent={true}
-        opacity={0.70}
-        depthWrite={false}    
+        opacity={0.80}
+        depthWrite={true}    
         side={THREE.DoubleSide}
+        // Añadimos propiedades reflectivas y de brillo alto para simular la espuma blanca en las crestas
+        clearcoat={7.0}
+        clearcoatRoughness={0.1}
+        sheen={1.0}
+        sheenColor={new THREE.Color('#27d0f1')}
       />
     </mesh>
   )
