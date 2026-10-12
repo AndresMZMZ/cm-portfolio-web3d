@@ -1,25 +1,33 @@
-import { Center, OrbitControls } from '@react-three/drei'
+import Ship from '@/components/canvas/Ship'
+import { useGameKeyboardMap } from '@/config/keyboardMap'
+import { useModeKeys } from '@/hooks/useModeKeys'
+import { KeyboardControls, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import './App.css'
-import { BarcoPrueba } from './components/canvas/models/BarcoPrueba'
+
+//useKeyboardControls solo funciona dentro de <KeyboardControls>, por eso va en un componente hijo
+function GameInputs() {
+  useModeKeys()
+  return null
+}
 
 function App() {
+  const keyboardMap = useGameKeyboardMap()
+
   return (
-    <div style={{ width: '100vw', height: '100vh', background: '#0b1329' }}>
-      <Canvas camera={{ position: [0, 5, 10], fov: 50 }}>
-        {/* Luces para iluminar el modelo */}
+    <KeyboardControls map={keyboardMap}>    
+      {/* Se quitó el div de 100vw/100vh: #root ya ocupa 100dvh (App.css) */}
+      <GameInputs />     
+      <Canvas camera={{ position: [0, 12, 22], fov: 50 }}>
+        {/* El fondo va dentro del Canvas porque ya no hay div contenedor */}
+        <color attach="background" args={['#0b1329']} />
         <ambientLight intensity={1} />
         <directionalLight position={[10, 10, 5]} intensity={1.5} />
-        
-        {/* Centra automáticamente tu modelo 3D en la escena */}
-        <Center>
-          <BarcoPrueba />
-        </Center>
-
-        {/* Permite rotar y hacer zoom con el mouse */}
+        <Ship />
+        {/* OrbitControls es solo para inspeccionar: ELIMINAR cuando hagamos la cámara de seguimiento (HU07) */}
         <OrbitControls />
       </Canvas>
-    </div>
+    </KeyboardControls>
   )
 }
 

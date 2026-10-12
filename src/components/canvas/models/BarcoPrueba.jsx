@@ -8,10 +8,14 @@ Título: El Perla Negra
 
 import { useGLTF } from '@react-three/drei'
 
+// Este componente solo dibuja el modelo; el movimiento vive en Ship.jsx
 export function BarcoPrueba(props) {
-  const { nodes, materials } = useGLTF('/models/barco-prueba.glb') //ruta del modelo 
+  const { nodes, materials } = useGLTF('/models/barco-prueba.glb') //ruta donde esta el modelo 
+  
   return (
+    
     <group {...props} dispose={null}>
+
       <group rotation={[Math.PI / 2, 0, Math.PI / 2]}>
         <group rotation={[-Math.PI, 0, 0]} scale={0.01}>
           <mesh
