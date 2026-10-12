@@ -6,12 +6,38 @@ Fuente: https://sketchfab.com/3d-models/the-black-pearl-997a4cce88564232bd1ff01e
 Título: El Perla Negra
 */
 
-import { useGLTF } from '@react-three/drei'
+import { useGLTF, useKeyboardControls } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber'; // useFrame para la animación por fotograma
+import { useRef } from 'react'; //useRef para la referencia del barco
 
 export function BarcoPrueba(props) {
-  const { nodes, materials } = useGLTF('/models/barco-prueba.glb') //ruta del modelo 
+  const { nodes, materials } = useGLTF('/models/barco-prueba.glb') //ruta donde esta el modelo 
+  
+  // Creamos una referencia para el lector de controles del teclado y para el barco
+  const shipRef = useRef()
+  const [,getKeyboardControls] = useKeyboardControls() //Instanciamos el lector de teclado
+
+  // l+ogica de movimiento del barco en cada 60FPS
+  useFrame((state, delta) => {
+    if (!shipRef.current) return
+
+    // Obtenemos los controles del teclado
+    const { forward, back, left, right } = getKeyboardControls()
+
+    const speed = 5 * delta // Velocidad de movimiento del barco
+    const rotationSpeed = 2 * delta // Velocidad de rotación del barco
+    // Movimiento hacia adelante y hacia atrás
+    if (forward) shipRef.current.position.z -= speed
+    if (back) shipRef.current.position.z += speed
+    // Movimiento hacia la izquierda y hacia la derecha
+    if (left) shipRef.current.rotation.y += rotationSpeed
+    if (right) shipRef.current.rotation.y -= rotationSpeed
+  })
+
   return (
-    <group {...props} dispose={null}>
+    //Asignmos la referencia al grupo del barco
+    <group ref={shipRef} {...props} dispose={null}>
+
       <group rotation={[Math.PI / 2, 0, Math.PI / 2]}>
         <group rotation={[-Math.PI, 0, 0]} scale={0.01}>
           <mesh
