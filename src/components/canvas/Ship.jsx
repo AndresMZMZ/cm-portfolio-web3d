@@ -9,6 +9,9 @@ const TURN_SPEED = 1.5   // radianes por segundo
 // Si el barco avanza "de lado", cambia este valor a 0, Math.PI / 2, Math.PI o -Math.PI / 2
 const MODEL_YAW_OFFSET = Math.PI / 2
 
+// Cuánto del casco queda bajo el agua; sube o baja este valor mirando el barco en pantalla
+const WATERLINE = 0.6
+
 // usamos un componente separado porque gltfjsx regenera el archivo del modelo y borraría la lógica
 export default function Ship() {
   const shipRef = useRef()
@@ -28,10 +31,11 @@ export default function Ship() {
   })
 
   return (
-    <group ref={shipRef}>
-      <group rotation={[0, MODEL_YAW_OFFSET, 0]}>
-        {/* Center va DENTRO del grupo que se mueve: así el barco gira sobre su propio centro */}
-        <Center>
+    // name="ship": la luz de Atmosphere lo busca por este nombre para seguirlo
+    <group ref={shipRef} name="ship">
+      <group rotation={[0, MODEL_YAW_OFFSET, 0]} position-y={-WATERLINE}>
+        {/* "top" apoya la base del modelo en y=0; si se ve al revés, quita "top" y sube WATERLINE */}
+        <Center top>
           <BarcoPrueba />
         </Center>
       </group>
