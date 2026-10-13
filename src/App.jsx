@@ -6,6 +6,7 @@ import { useModeKeys } from '@/hooks/useModeKeys'
 import { KeyboardControls, OrbitControls } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import './App.css'
+import FollowCamera from './components/canvas/FollowCamera'
 
 function GameInputs() {
   useModeKeys()
@@ -23,8 +24,8 @@ function App() {
         <Atmosphere />
         <Ocean />
         <Ship />
-        {/* OrbitControls es solo para inspeccionar: ELIMINAR cuando hagamos la cámara de seguimiento (HU07) */}
-        <OrbitControls />
+        <OrbitControls enabled={false} />
+        <FollowCamera />
       </Canvas>
     </KeyboardControls>
   )

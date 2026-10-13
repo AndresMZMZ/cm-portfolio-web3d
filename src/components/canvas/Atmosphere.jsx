@@ -26,7 +26,7 @@ export default function Atmosphere() {
       {/* Para probar otros ambientes cambia rayleigh entre 0.5 (cálido) y 6 (más azul) */}
       <Sky sunPosition={SUN_POSITION} turbidity={8} rayleigh={1} mieCoefficient={0.005} mieDirectionalG={0.8} />
       {/* El docente usa ambientLight, pero usamos hemisphereLight porque rellena con color de cielo arriba y de mar abajo (más natural) */}
-      <hemisphereLight args={['#ffd9b0', '#1b3a5c', 0.9]} />
+      <hemisphereLight args={['#ffe2c2', '#2a5578', 1.3]} />
       <directionalLight
         ref={lightRef}
         color="#ffb877"
