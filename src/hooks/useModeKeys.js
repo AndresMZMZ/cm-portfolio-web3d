@@ -1,4 +1,4 @@
-import { useGameStore } from '@/store/useGameStore'
+import { MODES, useGameStore } from '@/store/useGameStore'
 import { useKeyboardControls } from '@react-three/drei'
 import { useEffect } from 'react'
 
@@ -13,7 +13,16 @@ export function useModeKeys() {
     const offRight = subscribe((s) => s.aimRight, (pressed) => pressed && startCombat())
     // Esc: volver a navegar desde cualquier modo
     const offCancel = subscribe((s) => s.cancel, (pressed) => pressed && backToNavigation())
+    // Enter / F: abrir la isla cercana (solo navegando y dentro de su rango)
+    const offInteract = subscribe(
+      (s) => s.interact,
+      (pressed) => {
+        if (!pressed) return
+        const { mode, nearIsland, openPanel } = useGameStore.getState()
+        if (mode === MODES.NAVIGATION && nearIsland) openPanel(nearIsland)
+      }
+    )
     // Limpieza (cleanup): se quitan las suscripciones al desmontar
-    return () => { offLeft(); offRight(); offCancel() }
+    return () => { offLeft(); offRight(); offCancel(); offInteract() }
   }, [subscribe])
 }

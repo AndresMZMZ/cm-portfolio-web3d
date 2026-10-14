@@ -1,5 +1,8 @@
 import { BarcoPrueba } from '@/components/canvas/models/BarcoPrueba'
 import { MODES, useGameStore } from '@/store/useGameStore'
+// INICIO línea nueva
+import { updateIslandProximity } from '@/utils/islandProximity'
+// FIN línea nueva
 import { Center, useKeyboardControls } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
@@ -23,6 +26,17 @@ export default function Ship() {
     if (useGameStore.getState().mode !== MODES.NAVIGATION) return
 
     const { forward, back, left, right } = get()
+
+        // INICIO líneas nuevas
+    // Cerca de una isla el barco frena; esta función también avisa al estado qué isla está cerca
+    const speed = SPEED * updateIslandProximity(shipRef.current.position)
+    // FIN líneas nuevas
+    // INICIO líneas modificadas: -SPEED y SPEED pasan a -speed y speed
+    if (forward) shipRef.current.translateZ(-speed * delta)
+    if (back) shipRef.current.translateZ(speed * delta)
+    // FIN líneas modificadas
+
+
     // translateZ mueve el barco hacia donde mira; con position.z siempre iría por el eje Z global
     if (forward) shipRef.current.translateZ(-SPEED * delta)
     if (back) shipRef.current.translateZ(SPEED * delta)

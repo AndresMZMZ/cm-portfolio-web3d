@@ -13,6 +13,9 @@ export const useGameStore = create((set) => ({
   mode: MODES.NAVIGATION,
   activePanel: null, // id de la isla cuyo panel está abierto
 
+  nearIsland: null, // id de la isla cercana (o null); lo escribe el barco al navegar
+  setNearIsland: (id) => set({ nearIsland: id }),
+
   // Solo se puede entrar al combate desde la navegación
   startCombat: () =>
     set((s) => (s.mode === MODES.NAVIGATION ? { mode: MODES.COMBAT } : s)),

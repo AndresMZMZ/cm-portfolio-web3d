@@ -21,6 +21,9 @@ export function useGameKeyboardMap() {
     { name: 'cancel', keys: ['Escape'] },
     
     // Auto-navegación
-    { name: 'autoSail', keys: ['KeyZ'] }
+    { name: 'autoSail', keys: ['KeyZ'] },
+    
+    // Interactuar con una isla cercana
+    { name: 'interact', keys: ['Enter', 'KeyF'] },
   ], [])
 }
