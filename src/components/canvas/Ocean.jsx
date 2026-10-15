@@ -1,4 +1,3 @@
-// INICIO archivo reemplazado
 import { useFrame } from '@react-three/fiber'
 import { useMemo } from 'react'
 import * as THREE from 'three'
@@ -142,4 +141,3 @@ export default function Ocean() {
     </mesh>
   )
 }
-// FIN archivo reemplazado
