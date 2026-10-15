@@ -12,3 +12,5 @@
   - **Autor:** Tart Workshop (designers: Rodrigo Fuenzalida)
   - **Fuente:** Google Fonts - Pirata One
   - **Licencia:** SIL Open Font License, 1.1 (SIL OFL)
+
+- **Rosa de los vientos (Pantalla de carga / HU01):** Generada y optimizada con asistencia de Google Gemini y Squoosh.app, formato WebP, fecha: 15 Octubre 2026.
