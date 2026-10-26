@@ -3,7 +3,8 @@
 // Un enlace vacío ('') se mostrará automáticamente como "Próximamente".
 
 export const PROFILE = {
-  name: 'Tu Nombre', // Reemplaza con tu nombre completo
+  name: 'Camilo Andes Muñoz', // Reemplaza con tu nombre completo
+  initials: 'CM', // Reemplaza con tus iniciales
   roles: [
     'Estudiante de Ingeniería de Sistemas', 
     'Full-Stack Developer', 

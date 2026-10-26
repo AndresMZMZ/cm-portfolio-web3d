@@ -17,7 +17,7 @@ export function BarcoPrueba(props) {
     <group {...props} dispose={null}renderOrder={1}>
 
       <group rotation={[Math.PI / 2, 0, Math.PI / 2]}>
-        <group rotation={[-Math.PI, 0, 0]} scale={0.01}>
+        <group rotation={[-Math.PI, 0, 0]} scale={0.1}>//escala global del modelo del barco
           <mesh
             castShadow
             receiveShadow

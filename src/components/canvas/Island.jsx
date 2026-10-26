@@ -12,41 +12,9 @@ export default function Island(props) {
   const { nodes, materials } = useGLTF("/models/lighthouse.glb");
   return (
     <group {...props} dispose={null}>
-      <group
-        position={[26.4, -210.154, 211.14]}
-        rotation={[-2.941, 1.116, 2.906]}
-        scale={32.011}
-      >
-        <group position={[-2.118, 0.469, -0.154]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.eyesGroup3_Fish_0.geometry}
-            material={materials.Fish}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.eyesGroup3_Fish_0_1.geometry}
-            material={materials.Fish}
-          />
-        </group>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.lowpolyfishZBrush_defualt_group2_Fish_0.geometry}
-          material={materials.Fish}
-          position={[-2.11, 0.61, -1.99]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.teethupperZBrush_defualt_group2_Fish_0.geometry}
-          material={materials.Fish}
-          position={[-2.092, 0.459, -0.192]}
-        />
-      </group>
+      {/* Accesorios de la isla: faroles, bandera, cajas, gaviotas y salvavidas. */}
       <group position={[35.8, 35.386, 90.04]} scale={[5.015, 5.013, 5.192]}>
+        {/* Farol decorativo 1: estructura y luz. */}
         <group
           position={[16.711, -12.895, -34.999]}
           scale={[0.399, 0.598, 0.385]}
@@ -66,6 +34,7 @@ export default function Island(props) {
             scale={[0.014, 0.011, 0.021]}
           />
         </group>
+        {/* Farol decorativo 2: estructura y luz. */}
         <group position={[6.042, 1.129, -17.529]} scale={[0.399, 0.598, 0.385]}>
           <mesh
             castShadow
@@ -82,6 +51,7 @@ export default function Island(props) {
             scale={[0.014, 0.011, 0.021]}
           />
         </group>
+        {/* Farol decorativo 3: estructura y luz. */}
         <group
           position={[5.344, -12.437, -34.71]}
           scale={[0.399, 0.598, 0.385]}
@@ -101,6 +71,7 @@ export default function Island(props) {
             scale={[0.014, 0.011, 0.021]}
           />
         </group>
+        {/* Farol decorativo 4: estructura y luz. */}
         <group position={[3.55, 3.563, 3.641]} scale={[0.399, 0.598, 0.385]}>
           <mesh
             castShadow
@@ -117,6 +88,7 @@ export default function Island(props) {
             scale={[0.014, 0.011, 0.021]}
           />
         </group>
+        {/* Bandera: poste y paños. */}
         <group
           position={[-8.597, 2.61, 2.116]}
           rotation={[-Math.PI, 0.62, Math.PI]}
@@ -147,6 +119,7 @@ export default function Island(props) {
             scale={[-0.217, 2.437, 17.738]}
           />
         </group>
+        {/* Farol decorativo 5: estructura y luz. */}
         <group position={[14.8, -33.18, -53.3]} scale={[0.399, 0.598, 0.385]}>
           <mesh
             castShadow
@@ -163,6 +136,7 @@ export default function Island(props) {
             scale={[0.014, 0.011, 0.021]}
           />
         </group>
+        {/* Farol decorativo 6: estructura y luz. */}
         <group position={[-3.17, -7.13, -25.58]} scale={[0.399, 0.598, 0.385]}>
           <mesh
             castShadow
@@ -179,6 +153,7 @@ export default function Island(props) {
             scale={[0.014, 0.011, 0.021]}
           />
         </group>
+        {/* Farol decorativo 7: estructura y luz. */}
         <group position={[-11.9, -2.88, -16.61]} scale={[0.399, 0.598, 0.385]}>
           <mesh
             castShadow
@@ -195,6 +170,7 @@ export default function Island(props) {
             scale={[0.014, 0.011, 0.021]}
           />
         </group>
+        {/* Cajas de carga 1 y 2. */}
         <mesh
           castShadow
           receiveShadow
@@ -211,6 +187,7 @@ export default function Island(props) {
           material={materials.props}
           position={[-1.077, -0.766, -18.819]}
         />
+        {/* Gaviotas decorativas 1 y 2. */}
         <mesh
           castShadow
           receiveShadow
@@ -228,21 +205,7 @@ export default function Island(props) {
           position={[-8.607, 6.417, 2.113]}
           scale={[0.578, 0.578, 0.558]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.lowpoly_crate__10__props_0.geometry}
-          material={materials.props}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.lowpoly_gull__7__props_0.geometry}
-          material={materials.props}
-          position={[26.12, -32.963, -21.617]}
-          rotation={[Math.PI, -0.724, -Math.PI]}
-          scale={[1.215, 1.234, 1.21]}
-        />
+        {/* Salvavidas 1, 2 y 3. */}
         <mesh
           castShadow
           receiveShadow
@@ -271,17 +234,10 @@ export default function Island(props) {
           scale={[0.782, 0.782, 0.756]}
         />
 
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.lowpoly_gull__11__props_0.geometry}
-          material={materials.props}
-          position={[-2.45, 23.15, -3.2]}
-          rotation={[Math.PI, -1.15, -Math.PI]}
-          scale={[0.685, 0.706, 0.701]}
-        />
       </group>
+      {/* Árboles de la isla: cada árbol combina su tronco y sus hojas. */}
       <group position={[-77.8, -69.254, -35.96]} scale={0.946}>
+        {/* Árbol 1. */}
         <group
           position={[60.5, 58.338, -19.163]}
           rotation={[0.157, 0.179, 0.466]}
@@ -304,6 +260,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 2. */}
         <group
           position={[63.855, 48.441, -80.6]}
           rotation={[-2.994, 0.246, -2.886]}
@@ -326,6 +283,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 3. */}
         <group
           position={[60.225, 58.838, -63.846]}
           rotation={[-2.824, -0.049, 2.985]}
@@ -348,6 +306,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 4. */}
         <group
           position={[40.685, 57.4, -11.3]}
           rotation={[-2.798, -0.165, -3.088]}
@@ -370,50 +329,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
-        <group
-          position={[125.978, 22.038, -75.302]}
-          rotation={[-2.855, -1.123, -2.425]}
-          scale={[0.073, 0.088, 0.073]}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={
-              nodes.OptimizedTree__9__Optimized_Bark_Material_0.geometry
-            }
-            material={materials.Optimized_Bark_Material}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={
-              nodes.OptimizedTree__9__Optimized_Leaf_Material_0.geometry
-            }
-            material={materials.Optimized_Leaf_Material}
-          />
-        </group>
-        <group
-          position={[114.1, 62.61, 3.036]}
-          rotation={[-0.518, 0.041, -0.34]}
-          scale={[0.073, 0.066, 0.073]}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={
-              nodes.OptimizedTree__8__Optimized_Bark_Material_0.geometry
-            }
-            material={materials.Optimized_Bark_Material}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={
-              nodes.OptimizedTree__8__Optimized_Leaf_Material_0.geometry
-            }
-            material={materials.Optimized_Leaf_Material}
-          />
-        </group>
+        {/* Árbol 5. */}
         <group
           position={[130.338, 9.238, -147.044]}
           rotation={[-2.855, -1.123, -2.425]}
@@ -436,6 +352,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 6. */}
         <group
           position={[120.137, 15.238, -137.444]}
           rotation={[1.274, 1.399, -1.449]}
@@ -458,6 +375,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 7. */}
         <group
           position={[141.92, 32.7, -31.416]}
           rotation={[-0.162, 0.328, -0.435]}
@@ -480,28 +398,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
-        <group
-          position={[103.147, 41.846, -94.944]}
-          rotation={[-2.88, 0.468, 2.935]}
-          scale={[0.064, 0.102, 0.091]}
-        >
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={
-              nodes.OptimizedTree__3__Optimized_Bark_Material_0.geometry
-            }
-            material={materials.Optimized_Bark_Material}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={
-              nodes.OptimizedTree__3__Optimized_Leaf_Material_0.geometry
-            }
-            material={materials.Optimized_Leaf_Material}
-          />
-        </group>
+        {/* Árbol 8. */}
         <group
           position={[68.914, 56.4, -50.8]}
           rotation={[-2.058, 1.247, 2.095]}
@@ -520,6 +417,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 9. */}
         <group
           position={[45.29, 38.4, -126.544]}
           rotation={[-2.827, 0.286, 2.878]}
@@ -542,6 +440,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 10. */}
         <group
           position={[20.2, 51.9, -70.276]}
           rotation={[-2.85, 0.097, 3.058]}
@@ -564,6 +463,7 @@ export default function Island(props) {
             material={materials.Optimized_Leaf_Material}
           />
         </group>
+        {/* Árbol 11. */}
         <group
           position={[-2.3, -2.6, -130.3]}
           rotation={[1.464, -1.203, 1.681]}
@@ -587,11 +487,13 @@ export default function Island(props) {
           />
         </group>
       </group>
+      {/* Faro: torre, cubierta, galería superior y lámpara. */}
       <group
-        position={[23.3, 27.046, 73.44]}
+        position={[21.3, 27.046, 68]}
         rotation={[Math.PI, -1.191, -Math.PI]}
         scale={4.031}
       >
+        {/* Techo superior del faro. */}
         <mesh
           castShadow
           receiveShadow
@@ -600,6 +502,7 @@ export default function Island(props) {
           position={[0, 24.901, 0]}
           scale={[1, 0.462, 1]}
         />
+        {/* Torre principal del faro. */}
         <mesh
           castShadow
           receiveShadow
@@ -609,6 +512,7 @@ export default function Island(props) {
           rotation={[0, 0.045, 0]}
           scale={[2.643, 4.918, 2.643]}
         />
+        {/* Cubierta de la linterna. */}
         <mesh
           castShadow
           receiveShadow
@@ -618,6 +522,7 @@ export default function Island(props) {
           rotation={[Math.PI, 0, 0]}
           scale={0.694}
         />
+        {/* Anillos/barandilla de la galería de la linterna. */}
         <mesh
           castShadow
           receiveShadow
@@ -682,6 +587,7 @@ export default function Island(props) {
           position={[0, 26.019, 0]}
           scale={0.195}
         />
+        {/* Lámpara dentro de la linterna. */}
         <mesh
           castShadow
           receiveShadow
@@ -692,12 +598,14 @@ export default function Island(props) {
           scale={[0.027, 0.012, 0.027]}
         />
       </group>
+      {/* Muelles y pasarelas: plataforma principal, extensiones y escaleras. */}
       <group position={[63, -73.954, -22.96]}>
         <group
           position={[51.98, -83.29, -154]}
           rotation={[-0.055, 1.529, 0.107]}
           scale={[1, 0.757, 0.836]}
         >
+          {/* Plataforma estructural y superficie de paso del muelle. */}
           <mesh
             castShadow
             receiveShadow
@@ -711,6 +619,7 @@ export default function Island(props) {
             material={materials.walkway}
           />
         </group>
+        {/* Pasarela larga del muelle. */}
         <mesh
           castShadow
           receiveShadow
@@ -718,6 +627,7 @@ export default function Island(props) {
           material={materials.walkway}
           position={[92.8, -89.941, -65.99]}
         />
+        {/* Escaleras del muelle. */}
         <mesh
           castShadow
           receiveShadow
@@ -725,6 +635,7 @@ export default function Island(props) {
           material={materials.walkway}
           position={[16.8, -24.6, -110.1]}
         />
+        {/* Pasarela lateral. */}
         <mesh
           castShadow
           receiveShadow
@@ -733,7 +644,8 @@ export default function Island(props) {
           position={[-43.5, 98.2, 73]}
         />
       </group>
-      <group position={[-13.716, -36.926, 47.056]}>
+      {/* Agua y espuma que vienen integradas en el modelo 3D. */}
+      <group position={[-13.716, 0, 47.056]}>
         <mesh
           castShadow
           receiveShadow
@@ -749,147 +661,7 @@ export default function Island(props) {
           position={[117.822, -196.029, -2.543]}
         />
       </group>
-      <group
-        position={[24, 88.246, 158.71]}
-        rotation={[1.572, 0.049, -1.606]}
-        scale={0.037}
-      >
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds_birds_0.geometry}
-          material={materials.birds}
-          position={[3300, -640, 210]}
-          rotation={[0.029, -0.044, 1.145]}
-          scale={0.664}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__4__birds_0.geometry}
-          material={materials.birds}
-          position={[3300, -640, 210]}
-          rotation={[0.029, -0.044, -1.996]}
-          scale={[-0.664, 0.664, 0.664]}
-        />
-        {/*         <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__2__birds_0.geometry}
-          material={materials.birds}
-          position={[870, 2510, 4900]}
-          rotation={[0.006, -0.023, 0.499]}
-          scale={0.822}
-        /> */}
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__7__birds_0.geometry}
-          material={materials.birds}
-          position={[870, 2510, 4900]}
-          rotation={[0.006, -0.023, -2.642]}
-          scale={[-0.822, 0.822, 0.822]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__1__birds_0.geometry}
-          material={materials.birds}
-          position={[2350, -120, -340]}
-          rotation={[0.076, -0.041, 2.158]}
-          scale={0.664}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__3__birds_0.geometry}
-          material={materials.birds}
-          position={[562, 2299, 4869]}
-          rotation={[-0.471, 0.465, 1.735]}
-          scale={0.822}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__6__birds_0.geometry}
-          material={materials.birds}
-          position={[562, 2299, 4869]}
-          rotation={[-0.471, 0.465, -1.406]}
-          scale={[-0.822, 0.822, 0.822]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__5__birds_0.geometry}
-          material={materials.birds}
-          position={[2350, -120, -340]}
-          rotation={[0.076, -0.041, -0.984]}
-          scale={[-0.664, 0.664, 0.664]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__8__birds_0.geometry}
-          material={materials.birds}
-          position={[3010, -620, -20]}
-          rotation={[0.094, -0.018, 2.764]}
-          scale={0.664}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__9__birds_0.geometry}
-          material={materials.birds}
-          position={[3010, -620, -20]}
-          rotation={[0.094, -0.018, -0.378]}
-          scale={[-0.664, 0.664, 0.664]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__11__birds_0.geometry}
-          material={materials.birds}
-          position={[-3308.709, -507.547, 4876.986]}
-          rotation={[-0.736, -0.048, 1.809]}
-          scale={0.664}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__12__birds_0.geometry}
-          material={materials.birds}
-          position={[-3483.898, -934.269, 4695.258]}
-          rotation={[-0.782, -0.035, -2.345]}
-          scale={[-0.664, 0.664, 0.664]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__13__birds_0.geometry}
-          material={materials.birds}
-          position={[-3308.709, -507.547, 4876.986]}
-          rotation={[-0.736, -0.048, -1.332]}
-          scale={[-0.664, 0.664, 0.664]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__14__birds_0.geometry}
-          material={materials.birds}
-          position={[-4067.139, -909.032, 4405.271]}
-          rotation={[-0.711, -0.033, 2.415]}
-          scale={0.664}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.birds__15__birds_0.geometry}
-          material={materials.birds}
-          position={[-4067.139, -909.032, 4405.271]}
-          rotation={[-0.711, -0.033, -0.726]}
-          scale={[-0.664, 0.664, 0.664]}
-        />
-      </group>
+      {/* Casa roja de la isla. */}
       <mesh
         castShadow
         receiveShadow
@@ -899,6 +671,7 @@ export default function Island(props) {
         rotation={[0, -0.21, 0]}
         scale={0.526}
       />
+      {/* Roca/base principal que sostiene la isla. */}
       <mesh
         castShadow
         receiveShadow

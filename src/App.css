@@ -1,6 +1,8 @@
 #root {
+  /* Ancho total: Obliga al contenedor a ocupar el 100% de la pantalla horizontalmente */
   width: 100%;
   /* Usamos 100dvh porque en mobiles 100vh incluye la barra del navegador y corta la escena */
   height: 100dvh;
+  /* CONTROL DE DESPLAZAMIENTO: Oculta por completo las barras de scroll (desplazamiento) horizontales y vertical */
   overflow: hidden;
 }
