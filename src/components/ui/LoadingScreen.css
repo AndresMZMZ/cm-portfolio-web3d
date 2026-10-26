@@ -1,174 +1,188 @@
+/* ESTILOS DE LA PANTALLA DE CARGA (LOADING SCREEN)
+   Aquí se ajustan la distribución, tamaños, colores, barra de progreso circular
+   y la apariencia del botón de inicio.*/
+/* Contenedor principal; cubre toda la pantalla del navegador */
 .ls-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: radial-gradient(circle at center, #23272e 0%, #0d0f12 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #d1d5db;
-  font-family: 'Georgia', serif;
-  text-align: center;
-  padding: 24px;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  position: fixed;            /* Se fija sobre todo el viewport de la pantalla */
+  inset: 0;                   /* Abreviatura para top: 0, right: 0, bottom: 0, left: 0 */
+  z-index: 2000;              /* Capa alta para asegurar que tape el Canvas 3D */
+  background: radial-gradient(circle at center, #23272e 0%, #0d0f12 100%); /* Fondo degradado circular oscuro */
+  display: flex;              /* para alinear el contenido */
+  flex-direction: column;     /* Ordena los elementos hijos en columna (uno abajo del otro) */
+  align-items: center;        /* Centra todo horizontalmente */
+  justify-content: center;     /* Centra todo verticalmente */
+  color: #d1d5db;             /* Color para textos */
+  font-family: 'Georgia', serif; /* Tipografía*/
+  text-align: center;         /* Fuerza el centrado de los bloques de texto */
+  padding: 24px;              /* Margen de seguridad interno para pantallas móviles */
+  transition: opacity 0.6s ease, visibility 0.6s ease; /* Transición suave al terminar de cargar */
 }
 
+/* Clase mediante JavaScript cuando la carga llega al 100% */
 .ls-overlay.ls-hidden {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
+  opacity: 0;                 /* Se vuelve invisible gradualmente */
+  visibility: hidden;         /* Lo oculta del árbol de accesibilidad una vez termina la transición */
+  pointer-events: none;       /* Desactiva los clics para poder interactuar con el mundo 3d que esta de fondo */
 }
 
-/* Contenedor del Círculo / Brújula */
+/* Contenedor cuadrado que aloja la imagen de la rosa y la barra circular */
 .ls-compass-container {
-  position: relative;
-  width: min(320px, 80vw);  /* Agrandado para dar espacio a los bordes exteriores de la ilustración */
-  height: min(320px, 80vw);
-  display: flex;
+  position: relative;         /* se posicionen de forma absoluta dentro de él */
+  width: min(320px, 80vw);    /* Mide 320px, pero en pantallas pequeñas se reduce al 80% del ancho del dispositivo */
+  height: min(320px, 80vw);   /* Mantiene una proporción 1:1*/
+  display: flex;              /* Centra sus elementos hijos internos en ambos ejes */
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 20px;        /* Separación inferior con respecto al texto del porcentaje */
 }
 
-/* SVG del Anillo de Carga */
+/* SVG dinámico que dibuja el anillo circular de carga */
 .ls-compass-svg {
-  position: absolute;
-  inset: 0;
+  position: absolute;         /* Se superpone exactamente encima de la imagen de fondo */
+  inset: 0;                   /* Ocupa el 100% del contenedor */
   width: 100%;
   height: 100%;
-  transform: rotate(-90deg); /* Empieza a cargar desde arriba */
-  z-index: 5;
+  transform: rotate(-90deg);  /* Rota el SVG 90 grados a la izquierda para que la carga inicie (arriba) */
+  z-index: 5;                 /* Por encima de la imagen de fondo, por debajo del emblema central */
 }
 
-/* Franja de fondo de la barra de carga (hecha más delgada) */
+/* Anillo guía de fondo (el carril de la barra de progreso) */
 .ls-circle-bg {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.05);
-  stroke-width: 3;
+  fill: none;                 /* Sin color de fondo interno */
+  stroke: rgba(255, 255, 255, 0.05); /* Línea blanca ultra sutil que marca la circunferencia completa */
+  stroke-width: 3;            /* Grosor del carril de fondo */
 }
 
+/* Línea que se va rellenando según progresa la carga */
 .ls-circle-progress {
-  fill: none;
-  stroke: #d4af37; /* Color dorado náutico */
-  stroke-width: 4;
-  stroke-linecap: round;
-  transition: stroke-dashoffset 0.3s ease;
-  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+  fill: none;                 /* Sin color de fondo interno */
+  stroke: #d4af37;          
+  stroke-width: 4;            /*  píxel grueso de fondo para que resalte */
+  stroke-linecap: round;      /* Puntas de la barra redondeadas*/
+  transition: stroke-dashoffset 0.3s ease; /* Suaviza el avance de la barra cuando sube el porcentaje */
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6)); /* Efecto de brillo */
 }
 
-/* Imagen de la rosa de los vientos de fondo (Círculo perfecto y completo) */
+/* Imagen de la rosa de los vientos (Fondo)*/
 .ls-compass-bg-img {
   position: absolute;
-  width: 94%;        /* Tamaño optimizado para expandir la ilustración */
+  width: 94%;                 /* Un poco más pequeña que el contenedor para encajar dentro del anillo SVG */
   height: 94%;
-  border-radius: 50%;  /* Recorte circular perfecto sin esquinas cuadradas */
-  object-fit: cover;   /* Obliga al fondo beige a rellenar todo el círculo */
-  opacity: 1;
-  filter: none;
-  mix-blend-mode: normal;
+  border-radius: 50%;         /* Recorta cualquier esquina cuadrada de la imagen original a un círculo*/
+  object-fit: cover;          /* Evita que la ilustración se deforme si las dimensiones varían */
+  opacity: 1;                 /* Opacidad total */
+  filter: none;               /* Sin filtros de color aplicados */
+  mix-blend-mode: normal;     /* Modo de fusión normal estándar */
 }
 
-/* Emblema Central (Bandera / Iniciales) */
+/* Pequeño círculo flotante justo en el centro exacto de la imagen de fondo */
 .ls-center-badge {
   position: relative;
-  z-index: 10;
+  z-index: 10;                /* Se dibuja por encima del SVG y de la imagen de la brújula */
   width: 60px;
   height: 60px;
-  border-radius: 50%;
-  
-  border: 1px dashed rgba(212, 175, 55, 0.6);
+  border-radius: 50%;         /* Círculo central*/
+  border: 1px dashed rgba(212, 175, 55, 0.6); /* Borde punteado */
   display: flex;
-  flex-direction: column;
+  flex-direction: column;     /* Centra las iniciales o el emblema interno */
   align-items: center;
   justify-content: center;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8); /* Sombra interna negra para simular profundidad */
 }
 
+/* Iniciales en el centro*/
 .ls-initials {
   font-size: 16px;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #d4af37;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  font-weight: bold;          /* Texto en negrita */
+  letter-spacing: 2px;        /* Espaciado entre letras */
+  color: #d4af37;             
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9); /* Sombra negra detrás de las letras para mejor legibilidad */
 }
 
-/* Porcentaje */
+/* Texto que muestra el número del porcentaje */
 .ls-percent {
   font-size: 36px;
-  font-weight: 300;
+  font-weight: 300;           /* Estilo de fuente */
   letter-spacing: 2px;
-  color: #f3f4f6;
-  margin: 10px 0 4px 0;
+  color: #f3f4f6;             
+  margin: 10px 0 4px 0;       /* Márgenes exteriores (Arriba, Derecha, Abajo, Izquierda) */
 }
 
+/*Símbolo "%" que acompaña al número de carga */
 .ls-percent span {
-  font-size: 20px;
-  color: #d4af37;
+  font-size: 20px;            /* Símbolo más pequeño que el número principal */
+  color: #d4af37;           
 }
 
-/* Roles Rotativos y Nombre */
+/* Título secundario: ej "CARGANDO MUNDO") */
 .ls-title {
   font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: #9ca3af;
-  margin: 0 0 8px 0;
+  text-transform: uppercase;  /* Transforma automáticamente todo el texto a MAYÚSCULAS */
+  letter-spacing: 3px;        
+  color: #9ca3af;            
+  margin: 0 0 8px 0;          /* Separación inferior */
 }
 
+/* Contenedor del texto rotativo (roles, consejos de carga, o subtítulos cambiantes) */
 .ls-role-container {
-  height: 28px;
+  height: 28px;               /* Altura fija para que la UI no salte al cambiar de un texto largo a uno corto */
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
+  margin-bottom: 24px;       
 }
 
+/* Estilo del texto que rota dinámicamente */
 .ls-role-text {
   font-size: 16px;
-  color: #d4af37;
-  font-style: italic;
+  color: #d4af37;             
+  font-style: italic;         /* Letra en cursiva / inclinada */
   letter-spacing: 1px;
 }
 
-/* Botón de Inicio */
+/* Botón "INICIAR" que se activa al completar el 100% */
 .ls-start-btn {
-  padding: 12px 28px;
+  padding: 12px 28px;         /* Tamaño interno del botón (Alto y Ancho) */
   font-size: 15px;
-  font-family: inherit;
-  text-transform: uppercase;
+  font-family: inherit;       /* Hereda automáticamente la fuente 'Georgia' configurada en el padre */
+  text-transform: uppercase;  /* Texto del botón en MAYÚSCULAS */
   letter-spacing: 2px;
-  border-radius: 6px;
-  border: 1px solid #d4af37;
-  background: rgba(212, 175, 55, 0.1);
-  color: #f3f4f6;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  border-radius: 6px;         /* Esquinas suavemente redondeadas */
+  border: 1px solid #d4af37; 
+  background: rgba(212, 175, 55, 0.1); /* Fondo casi transparente (10% de opacidad) */
+  color: #f3f4f6;             
+  cursor: pointer;            /* Cambia el cursor del mouse a la "mano" */
+  transition: all 0.3s ease;  /* Suaviza las animaciones de color y sombra al pasar el cursor */
 }
 
+/* Efectos visuales interactivos cuando el usuario pasa el mouse sobre el botón activo */
 .ls-start-btn:hover:not(:disabled) {
-  background: #d4af37;
-  color: #0d0f12;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  background: #d4af37;        
+  color: #0d0f12;             /* cambio de color del texto para hacer contraste */
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); /* Resplandor exterior (Glow effect) alrededor del botón */
 }
 
+/* Estado del botón mientras las cosas aún se están cargando */
 .ls-start-btn:disabled {
-  border-color: rgba(255, 255, 255, 0.15);
-  background: transparent;
-  color: #4b5563;
-  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.15); /* color del Borde */
+  background: transparent;    /* Sin color de fondo */
+  color: #4b5563;             
+  cursor: not-allowed;        /* Cambia el puntero del mouse al símbolo rojo de prohibido */
 }
 
+/* Estilo de accesibilidad: resalta el botón al navegar usando puramente el teclado (tecla Tab) */
 .ls-start-btn:focus-visible {
-  outline: 2px solid #f3f4f6;
-  outline-offset: 3px;
+  outline: 2px solid #f3f4f6; 
+  outline-offset: 3px;        /* Separa la línea de enfoque un par de píxeles por fuera del botón */
 }
 
-/* Quien pide menos movimiento en su sistema no ve transiciones */
+/* ACCESIBILIDAD MULTIMEDIA:
+   Si el usuario tiene activado en su sistema operativo la opción de "Reducir movimiento",
+   este bloque desactiva las transiciones para evitar animaciones molestas. */
 @media (prefers-reduced-motion: reduce) {
   .ls-overlay,
   .ls-circle-progress,
   .ls-start-btn {
-    transition: none;
+    transition: none;         /* Los cambios de estado ocurren de forma inmediata sin suavizado */
   }
 }

@@ -1,10 +1,21 @@
+// CONFIGURACIÓN FÍSICA Y VISUAL DEL FARO (LIGHTHOUSE)
 export const LIGHTHOUSE = {
-  lampPosition: [2.3, 28.3, -72.6], // posición del foco en el mundo
-  beamLength: 120,            // largo del haz
-  beamRadius: 14,             // ancho del haz en el extremo lejano
-  period: 8,                  // segundos por vuelta (los faros reales giran en unos 5 a 15 s)
-  color: '#fff1c2',           // luz cálida
-  intensity: 0.9,             // brillo del haz visible
-  spotIntensity: 3000,        // luz que cae sobre el mar y el barco
-  debug: false,                // muestra una esfera roja en el foco: poner false al terminar
+  // UBICACIÓN EXACTA DEL FOCO EN EL ESPACIO 3D:
+  lampPosition: [15, 203, -32], 
+
+  // DIMENSIONES DEL HAZ DE LUZ VOLUMÉTRICO:
+  beamLength: 420,            // Alcance/Largo del haz: Qué tan lejos se proyecta el cono de luz en el horizonte
+  beamRadius: 14,             // Ancho/Grosor del haz
+
+  // VELOCIDAD DE GIRO DE LA LINTERNA:tiempo que tarda la luz en dar una rotación completa de 360 grados sobre el eje Y.
+  period: 8,                  
+
+  // ATRIBUTOS LUMÍNICOS:
+  color: '#fff1c2',           // Tono de la luz
+  intensity: 0.9,             // Opacidad visual:el efecto de niebla/polvo iluminado
+  spotIntensity: 3000,        // Intensidad de la luz física (SpotLight) que ilumina dinámicamente el barco y el agua al pasar
+
+  // MODO DE DESARROLLO (DEPURACIÓN):
+  // Si está en 'true', dibuja una esfera de guía roja e incandescente en el punto exacto de 'lampPosition'.
+  debug: false,                
 }

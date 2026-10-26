@@ -1,149 +1,169 @@
-/* lineas nuevas */
+/* ESTILOS DEL PANEL DE PROYECTOS (PROJECT PANEL)
+   Aquí se ajustan el fondo translúcido, el diseño del modal contenedor,
+   las tarjetas de proyectos en formato grid, etiquetas y el botón de cierre. */
+
+/* Fondo oscuro que cubre todo cuando el panel se abre */
 .pp-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 10, 25, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  backdrop-filter: blur(6px);
+  position: fixed;            /* Se fija cubriendo por completo la ventana del navegador */
+  inset: 0;                   /* top: 0, right: 0, bottom: 0, left: 0 */
+  background: rgba(5, 10, 25, 0.8); /* color seleccionado con 80% de opacidad */
+  display: flex;              /* Activa flexbox para alinear el modal hijo */
+  align-items: center;        /* Centra el modal verticalmente */
+  justify-content: center;     /* Centra el modal horizontalmente */
+  z-index: 1000;              /* Capa alta*/
+  backdrop-filter: blur(6px); /* Efecto de vidrio esmerilado (desenfoca el océano 3D de fondo) */
 }
 
+/* El contenedor flotante (modal/tarjeta) que aloja la información */
 .pp-panel {
-  background: #0f172a;
-  color: #f8fafc;
-  padding: 32px;
-  border-radius: 16px;
-  width: 90%;
-  max-width: 700px;
-  max-height: 85vh;
-  overflow-y: auto;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-  outline: none;
+  background: #0f172a;        /* Fondo dela pizarra*/
+  color: #f8fafc;             /* Color del Texto principal*/
+  padding: 32px;              /* Espaciado interno*/
+  border-radius: 16px;        
+  width: 90%;                 /* Ocupa casi todo el ancho en pantallas móviles */
+  max-width: 700px;           /* Límite máximo de ancho en monitores de escritorio */
+  max-height: 85vh;           /* Altura máxima equivalente al 85% de la ventana de la pantalla */
+  overflow-y: auto;           /* Si el texto excede la altura máxima, activa una barra de desplazamiento vertical */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* Borde sutil blanco semitransparente */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); /* Sombra intensa hacia abajo para simular flotado y volumen */
+  outline: none;              /* Remueve el borde por defecto del navegador al enfocar el contenedor */
 }
 
+/* Título principal de la isla*/
 .pp-panel h2 {
-  margin-top: 0;
-  font-size: 26px;
-  color: #38bdf8;
-  border-bottom: 2px solid rgba(56, 189, 248, 0.3);
-  padding-bottom: 10px;
+  margin-top: 0;              /* Elimina el margen superior predeterminado */
+  font-size: 26px;            /* Tamaño de fuente*/
+  color: #38bdf8;           
+  border-bottom: 2px solid rgba(56, 189, 248, 0.3); /* color de la Línea divisora */
+  padding-bottom: 10px;       /* Espacio entre el texto del título y su línea inferior */
 }
 
+/* Subtítulos dentro del panel */
 .pp-panel h3 {
-  margin-top: 24px;
-  font-size: 20px;
-  color: #93c5fd;
+  margin-top: 24px;           /* Separa el subtítulo superior */
+  font-size: 20px;            
+  color: #93c5fd;           
 }
 
+/* Lista contenedora de roles, habilidades o etiquetas */
 .pp-roles {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 10px 0;
+  list-style: none;           /* Quita los puntos de la lista */
+  padding: 0;                 /* Elimina la sangría izquierda por defecto */
+  display: flex;              
+  gap: 8px;                   /* Separación equitativa entre cada etiqueta */
+  flex-wrap: wrap;            /* Si las etiquetas no caben en una línea, saltan automáticamente a la siguiente */
+  margin: 10px 0;             /* Margen superior e inferior */
 }
 
+/* Estilo individual para cada etiqueta/rol (Badge) */
 .pp-roles li {
   background: rgba(56, 189, 248, 0.1);
-  color: #38bdf8;
-  padding: 4px 10px;
-  border-radius: 6px;
-  font-size: 14px;
+  color: #38bdf8;           
+  padding: 4px 10px;          
+  border-radius: 6px;         
+  font-size: 14px;            
   border: 1px solid rgba(56, 189, 248, 0.2);
 }
 
+/* Contenedor que agrupa las tarjetas de los proyectos */
 .pp-list {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: 14px;
-  margin-top: 10px;
+  list-style: none;          
+  padding: 0;                 
+  display: grid;              /* Activa el sistema Grid (Rejilla) */
+  gap: 14px;                  /* Distancia de separación fija entre tarjetas */
+  margin-top: 10px;           
 }
 
+/* Tarjeta individual de proyecto */
 .pp-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 16px;
-  border-radius: 10px;
-  transition: border-color 0.2s ease;
+  background: rgba(255, 255, 255, 0.03); 
+  border: 1px solid rgba(255, 255, 255, 0.08); 
+  padding: 16px;             
+  border-radius: 10px;        
+  transition: border-color 0.2s ease; /* Transición suave de 0.2 segundos al cambiar el color del borde */
 }
 
+/* Efecto al pasar el cursor sobre una tarjeta de proyecto */
 .pp-card:hover {
-  border-color: rgba(56, 189, 248, 0.4);
+  border-color: rgba(56, 189, 248, 0.4); /* El borde se ilumina a azul cielo para indicar interactividad */
 }
 
+/* Nombre o título del proyecto */
 .pp-card h4 {
-  margin: 4px 0 8px 0;
-  font-size: 18px;
+  margin: 4px 0 8px 0;       /* Control de márgenes exteriores estrechos */
+  font-size: 18px;           
 }
 
+/* Descripción detallada del proyecto */
 .pp-card p {
-  margin: 0 0 12px 0;
-  font-size: 14px;
-  opacity: 0.85;
+  margin: 0 0 12px 0;         /* Espacio inferior para separarlo de los enlaces */
+  font-size: 14px;            
+  opacity: 0.85;              
 }
 
+/* Pequeña etiqueta de tiempo, versión o semana del proyecto */
 .pp-week {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #cbd5e1;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2px 6px;
-  border-radius: 4px;
+  font-size: 12px;            
+  text-transform: uppercase;  /* Fuerza el texto a MAYÚSCULAS */
+  letter-spacing: 0.05em;     /* Espaciado ligero entre letras */
+  color: #cbd5e1;            
+  background: rgba(255, 255, 255, 0.1); 
+  padding: 2px 6px;           
+  border-radius: 4px;         
 }
 
+/* Enlaces externos a los proyectos (GitHub, Demo en vivo, etc.) */
 .pp-link {
-  display: inline-block;
-  color: #38bdf8;
-  text-decoration: none;
-  font-weight: 500;
+  display: inline-block;      /* Permite asignarle márgenes correctos respetando la línea de texto */
+  color: #38bdf8;             
+  text-decoration: none;      /* Quita el subrayado clásico por defecto */
+  font-weight: 500;           /* Grosor de letra medio/semi-negrita */
   font-size: 14px;
 }
 
+/* Comportamiento al pasar el mouse por encima del enlace */
 .pp-link:hover {
-  text-decoration: underline;
+  text-decoration: underline; /* Agrega el subrayado estándar de hipervínculo */
 }
 
+/* Texto de marcador de posición para proyectos futuros (Próximamente / Soon) */
 .pp-soon {
   font-size: 14px;
-  opacity: 0.5;
-  font-style: italic;
+  opacity: 0.5;               /* Muy atenuado (50% de opacidad) para reflejar inactividad */
+  font-style: italic;         /* Letra en cursiva */
 }
 
-/* HU27: Cierre del panel y pie de página */
+/* HU27: Barra inferior o pie de página del modal */
 .pp-footer { 
-  margin-top: 22px; 
-  padding-top: 14px; 
-  display: flex; 
-  align-items: center; 
-  justify-content: space-between; 
-  gap: 12px; 
-  border-top: 1px solid rgba(255, 255, 255, 0.12); 
+  margin-top: 22px;           
+  padding-top: 14px;          /* Espacio interior antes del contenido del footer */
+  display: flex;             
+  align-items: center;        
+  justify-content: space-between; /* Empuja el texto a la izquierda y el botón a la derecha */
+  gap: 12px;                  /* Espacio mínimo de seguridad si la pantalla se estrecha */
+  border-top: 1px solid rgba(255, 255, 255, 0.12); /* Línea divisoria superior delgada */
 }
 
+/* Texto aclaratorio de controles o sugerencias en el footer */
 .pp-hint { 
   margin: 0; 
   font-size: 14px; 
-  opacity: 0.8; 
+  opacity: 0.8;    
 }
 
+/* Botón "Volver a navegar" o cerrar modal */
 .pp-close { 
-  padding: 10px 18px; 
-  font-size: 16px; 
-  cursor: pointer; 
-  border-radius: 8px; 
-  border: 1px solid #fff; 
-  background: transparent; 
-  color: #fff; 
+  padding: 10px 18px;         /* Proporciones ideales de clickeo para el botón */
+  font-size: 16px;            
+  cursor: pointer;            /* Transforma el cursor en mano clickeadora */
+  border-radius: 8px;        
+  border: 1px solid #fff;      /* Borde sólido blanco */
+  background: transparent;    /* Fondo transparente del panel */
+  color: #fff;               
   transition: background 0.2s ease;
 }
 
+/* Efecto visual al pasar el cursor o navegar con tabulador sobre el botón de cierre */
 .pp-close:hover, .pp-close:focus-visible { 
-  background: rgba(255, 255, 255, 0.15); 
+  background: rgba(255, 255, 255, 0.15);
 }
-/* fin de lineas nuevas */
