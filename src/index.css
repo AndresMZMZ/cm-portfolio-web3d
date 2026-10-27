@@ -1,13 +1,17 @@
+/* Reseteo global para estandarizar márgenes y cálculo de tamaños */
 * { 
-  padding: 0; 
-  margin: 0; 
+  padding: 0;                 /* Elimina los espacios internos predeterminados (como las sangrías de las listas) */
+  margin: 0;                  /* Elimina los márgenes exteriores por defecto (como el espacio extra de los textos) */
+  
+  /* CAJA DE DISEÑO INTELIGENTE (Box-Sizing):'border-box' obliga al navegador a incluir el grosor de los bordes y los paddings dentro del tamaño total del elemento.*/
   box-sizing: border-box; 
 }
 
-/* El docente fuerza "canvas { height: 100vh !important }",
- pero dejamos que el Canvas llene #root porque evita !important */
+/* Fuerza el tamaño completo de la pantalla y bloquea el desplazamiento lateral/vertical del navegador */
 html, body { 
-  width: 100%; 
-  height: 100%; 
+  width: 100%;                
+  height: 100%;              
+  
+  /* BLOQUEO DE SCROLL: Oculta por completo las barras de desplazamiento a nivel de navegador. */
   overflow: hidden; 
 }
