@@ -17,7 +17,7 @@ export default function LoadingScreen() {
 
   // SELECTORES DEL ESTADO GLOBAL (Zustand):
   const mode = useGameStore((s) => s.mode); // Modo actual (INTRO, NAVIGATION, etc.)
-  const startGame = useGameStore((s) => s.startGame); // Función que cambia el estado  modo de INTRO a NAVIGATION
+  const startGame = useGameStore((s) => s.startGame); // Función que cambia el estado  modo de INTRO a SETTINGS (panel de configuración)
 
   // ESTADOS LOCALES DE REACT:
   const [roleIndex, setRoleIndex] = useState(0); // Índice del rol actual que se muestra en pantalla
@@ -31,7 +31,7 @@ export default function LoadingScreen() {
   // Evalúa el estado de descarga. Controla que el progreso avance unidireccionalmente y evita bloqueos permanentes al visitante si una textura secundaria falla.
   useEffect(() => {
     if (ready) return; // Si ya está listo, no vuelve a evaluar nada
-    if (progress >= 100 && !active || errors.length > 0) {
+    if ((progress >= 100 && !active) || errors.length > 0) {
       const id = setTimeout(() => setReady(true), 0);
       return () => clearTimeout(id);
     }

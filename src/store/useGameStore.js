@@ -3,6 +3,7 @@ import { create } from 'zustand'
 // Object.freeze bloquea este objeto para que ningún otro script pueda modificar o alterar 
 export const MODES = Object.freeze({
   INTRO: 'intro',           // Fase inicial: pantalla de carga activa y controles del barco congelados.
+  SETTINGS: 'settings',     // Fase de configuración (HU02): panel con audio e instrucciones antes de navegar.
   NAVIGATION: 'navigation', // Fase de exploración: el barco tiene el timón libre y navega por el océano.
   COMBAT: 'combat',         // Fase de acción: cañones laterales desplegados y listos para apuntar.
   PANEL: 'panel',           // Fase de portafolio: se detiene el barco para leer los proyectos de una isla.
@@ -17,6 +18,7 @@ export const useGameStore = create((set) => ({
   activePanel: null,     // Toma el ID string de la isla cuyo portafolio se está leyendo (ej: 'proyectos').
   nearIsland: null,      // Almacena el ID de la isla si el barco está en su radio de choque, o null si está en alta mar.
   outOfBounds: false,    // Bandera booleana (true/false) indica si el barco entró en la franja límite del océano (HU09).
+  audioEnabled: true,    // Audio activado (activado = enabled): lo elige el visitante en el panel de HU02 y lo usará HU03 (puedes renombrarla a tu gusto).
   
   // ACCIÓN: Registrar cercanía con una isla
   // Se invocada constantemente por el bucle del barco (Ship.jsx) para mostrar u ocultar el botón flotante en HTML.
@@ -25,9 +27,15 @@ export const useGameStore = create((set) => ({
   // Invocada por los sensores de WorldBounds.jsx para que BoundaryWarning.jsx muestre el cartel "Regresa al mar abierto".
   setOutOfBounds: (value) => set({ outOfBounds: value }),
 
-  // ACCIÓN: Arrancar el juego (Botón INICIAR de la pantalla de carga)
-  // Regla estricta: Solo cambia el modo a NAVEGACIÓN si el jugador se encuentra actualmente en la fase INTRO.
-  startGame: () => set((s) => (s.mode === MODES.INTRO ? { mode: MODES.NAVIGATION } : s)),
+  // ACCIÓN: Pasar de la pantalla de carga al panel de configuración (Botón INICIAR de la pantalla de carga)
+  // Regla estricta: Solo cambia el modo a CONFIGURACIÓN (SETTINGS) si el jugador se encuentra actualmente en la fase INTRO.
+  startGame: () => set((s) => (s.mode === MODES.INTRO ? { mode: MODES.SETTINGS } : s)),
+ // ACCIÓN: Elegir si el audio está activado o no (interruptor del panel de HU02)
+  SET_AUDIO_ENABLED: (value) => set({ audioEnabled: value }),
+  // ACCIÓN: Confirmar el panel de configuración (botón Empezar del panel de HU02)
+  // Regla estricta: Solo pasa a NAVEGACIÓN si el jugador está en la fase SETTINGS.
+  confirmSettings: () =>
+    set((s) => (s.mode === MODES.SETTINGS ? { mode: MODES.NAVIGATION } : s)),
 
   // ACCIÓN: Entrar en modo de combate (Teclas Q / E)
   // Regla estricta: Solo permite desenfundar los cañones si el barco se encontraba navegando en mar abierto.
@@ -42,5 +50,10 @@ export const useGameStore = create((set) => ({
   // Regla estricta: Si el jugador presiona Esc estando todavía en la pantalla de carga (INTRO), el estado se ignora (s)
   // para evitar que se salte la carga. En cualquier otro modo, devuelve al barco a NAVEGACIÓN y limpia el panel activo.
   backToNavigation: () =>
-    set((s) => (s.mode === MODES.INTRO ? s : { mode: MODES.NAVIGATION, activePanel: null })),
+    // inicio cambio, LINEAS NUEVAS
+    set((s) =>
+      s.mode === MODES.INTRO || s.mode === MODES.SETTINGS
+        ? s
+        : { mode: MODES.NAVIGATION, activePanel: null },
+    ),
 }))
