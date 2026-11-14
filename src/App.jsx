@@ -11,6 +11,7 @@ import BoundaryWarning from "@/components/ui/BoundaryWarning";
 import IslandPrompt from "@/components/ui/IslandPrompt";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import ProjectPanel from "@/components/ui/ProjectPanel";
+import SettingsPanel from "@/components/ui/SettingsPanel";
 import { CAMERA } from "@/config/camera";
 import { ISLANDS } from "@/config/islands";
 import { useGameKeyboardMap } from "@/config/keyboardMap";
@@ -61,6 +62,8 @@ function App() {
       <BoundaryWarning />
       <IslandPrompt /> {/* Botón flotante de "Ver Isla" cuando estás cerca */}
       <ProjectPanel /> {/* Modal del portafolio con la lista de proyectos */}
+      <SettingsPanel />{" "}
+      {/* Panel de configuración inicial con audio e instrucciones */}
       <LoadingScreen />{" "}
       {/* Pantalla negra inicial con la brújula dorada de carga */}
       {/* LIENZO GRÁFICO PRINCIPAL (CANVAS DE THREE.JS) Todo lo que esté dentro de esta etiqueta se procesará mediante WebGL / Tarjeta Gráfica.*/}
@@ -73,7 +76,8 @@ function App() {
         }}
       >
         {/* ENTORNO, OCÉANO Y EFECTOS VISUALES */}
-        <Atmosphere />{" "} {/* Luces solares, ambientales y color del domo del cielo */}
+        <Atmosphere />{" "}
+        {/* Luces solares, ambientales y color del domo del cielo */}
         <Ocean /> {/* El agua con movimiento de olas */}
         <LighthouseBeam /> {/* El cono volumétrico de luz rotativo del faro */}
         {/* CONTENEDORES DE ESPERA (Suspense): 
@@ -90,19 +94,20 @@ function App() {
         <Suspense fallback={null}>
           {/* El docente usa <Physics debug> siempre, pero usamos debug={DEBUG_CAMERA} porque en producción no se dibujan los colisionadores. */}
           <Physics debug={DEBUG_CAMERA}>
-            <Ship /> {/* Cuerpo dinámico del barco con cápsula de colisión en el casco */}
-            <IslandColliders /> {/* Cuboides estáticos que rodean la roca y el muelle de cada isla */}
-            <WorldBounds /> {/* Muros perimetrales fijos y sensores de límite del océano */}
+            <Ship />{" "}
+            {/* Cuerpo dinámico del barco con cápsula de colisión en el casco */}
+            <IslandColliders />{" "}
+            {/* Cuboides estáticos que rodean la roca y el muelle de cada isla */}
+            <WorldBounds />{" "}
+            {/* Muros perimetrales fijos y sensores de límite del océano */}
           </Physics>
         </Suspense>
-
         <Suspense fallback={null}>
           {/* Recorre el arreglo de islas y dibuja sobre cada una su letrero de texto flotante en 3D */}
           {ISLANDS.map((i) => (
             <IslandTitle key={i.id} island={i} />
           ))}
         </Suspense>
-
         {/* GESTIÓN DE CÁMARAS:
             Si entraste en modo debug, monta <OrbitControls> para poder orbitar y arrastrar el mundo con el ratón.
             Si juegas normalmente, monta <FollowCamera />, que persigue cinemáticamente la popa del barco. */}

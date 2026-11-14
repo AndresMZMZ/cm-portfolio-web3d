@@ -1,4 +1,4 @@
-import { useGameStore } from "@/store/useGameStore";
+import {MODES, useGameStore } from "@/store/useGameStore";
 
 // Aviso en pantalla cuando el barco se acerca al borde del mundo (HU09, subtarea de UX).
 // Se activa desde WorldBounds.jsx mediante el estado outOfBounds (Fuera de límites).
@@ -7,8 +7,9 @@ import { useGameStore } from "@/store/useGameStore";
 //pointerEvents: "none" (Transparencia al ratón): Evita que el cartel bloquee clics o el arrastre de cámara sobre el Canvas.
 export default function BoundaryWarning() {
   const outOfBounds = useGameStore((s) => s.outOfBounds);
+  const mode = useGameStore((s) => s.mode);
 
-  if (!outOfBounds) return null;
+  if (!outOfBounds || mode !== MODES.NAVIGATION) return null;
 
   return (
     <div
