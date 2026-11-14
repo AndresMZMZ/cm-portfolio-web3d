@@ -14,12 +14,16 @@ export const useGameStore = create((set) => ({
   
   // ESTADOS INICIALES:
   mode: MODES.INTRO,     // El juego arranca obligatoriamente en la pantalla de carga (INTRO).
-  activePanel: null,     // Almacena el ID string de la isla cuyo portafolio se está leyendo (ej: 'proyectos').
+  activePanel: null,     // Toma el ID string de la isla cuyo portafolio se está leyendo (ej: 'proyectos').
   nearIsland: null,      // Almacena el ID de la isla si el barco está en su radio de choque, o null si está en alta mar.
-
+  outOfBounds: false,    // Bandera booleana (true/false) indica si el barco entró en la franja límite del océano (HU09).
+  
   // ACCIÓN: Registrar cercanía con una isla
-  // Esta función es invocada constantemente por el bucle del barco para avisarle a la interfaz 2D si debe mostrar el botón.
+  // Se invocada constantemente por el bucle del barco (Ship.jsx) para mostrar u ocultar el botón flotante en HTML.
   setNearIsland: (id) => set({ nearIsland: id }),
+  // ACCIÓN: Activar o desactivar la alerta de límite del mundo (HU09)
+  // Invocada por los sensores de WorldBounds.jsx para que BoundaryWarning.jsx muestre el cartel "Regresa al mar abierto".
+  setOutOfBounds: (value) => set({ outOfBounds: value }),
 
   // ACCIÓN: Arrancar el juego (Botón INICIAR de la pantalla de carga)
   // Regla estricta: Solo cambia el modo a NAVEGACIÓN si el jugador se encuentra actualmente en la fase INTRO.
