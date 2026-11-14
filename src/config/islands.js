@@ -5,7 +5,9 @@ export const ISLANDS = [
     name: 'Isla de Proyectos', // Nombre 
     title: 'EL FARO DE LOS PROYECTOS', // Letrero 3D que aparece al acercarse el barco.
     position: [0, 0, -80], // Centro de la isla en el mundo: [X, Y, Z].
-    modelY: 109, // Altura (Eje Y) del modelo de la isla; aumenta para elevarlo.
+    // Aquí manipulas la altura (eje Y) de la isla respecto al nivel del mar (SHIP.waterline = 5).
+    modelY: 107.068,
+    // Aquí manipulas la escala de la isla respecto al barco.
     modelScale: 0.7, // Escala uniforme de todo el modelo; modifica el tamaño general.
     titleOffset: [18, 129, 77], // Desplazamiento del letrero [X, Y, Z] respecto al centro de la isla.
     interactRadius: 280, // Radio desde el centro: al entrar, aparece el botón y empieza el frenado.

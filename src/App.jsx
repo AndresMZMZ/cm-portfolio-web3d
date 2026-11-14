@@ -70,7 +70,7 @@ function App() {
         {/* ENTORNO, OCÉANO Y EFECTOS VISUALES */}
         <Atmosphere />{" "}
         {/* Luces solares, ambientales y color del domo del cielo */}
-        <Ocean /> /* El agua con movimiento de olas */
+        <Ocean /> {/* El agua con movimiento de olas */}
         <LighthouseBeam /> {/* El cono volumétrico de luz rotativo del faro */}
         {/* CONTENEDORES DE ESPERA (Suspense): 
             Evitan que el juego se rompa o se congele mientras los archivos pesados (.glb / fuentes) se descargan */}
