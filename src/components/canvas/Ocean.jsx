@@ -93,7 +93,12 @@ export default function Ocean() {
   // El material se genera una sola vez. Modificamos el MeshStandardMaterial nativo de Three.js 
   // inyectando nuestro código GLSL personalizado en puntos clave de su ciclo de compilación.
   const material = useMemo(() => {
-    const m = new THREE.MeshStandardMaterial({ roughness: 0.15, metalness: 0 });
+    const m = new THREE.MeshStandardMaterial({
+      roughness: 0.15,
+      metalness: 0,
+      transparent: true,
+      opacity: 0.85,
+    });
     
     m.onBeforeCompile = (shader) => {
       // 1. Vinculación de Uniforms (Variables compartidas CPU -> GPU):
@@ -172,15 +177,22 @@ export default function Ocean() {
   });
 
   return (
-    <mesh
-      position-y={5} // Elevación del plano del mar en el eje Y global.
-      rotation={[-Math.PI / 2, 0, 0]} // Rota el plano horizontalmente para que actúe como suelo.
-      receiveShadow
-      material={material}
-    >
-      <planeGeometry
-        args={[OCEAN_SIZE, OCEAN_SIZE, OCEAN_SEGMENTS, OCEAN_SEGMENTS]}
-      />
-    </mesh>
+    <group>
+      <mesh
+        position-y={5} // Elevación del plano del mar en el eje Y global.
+        rotation={[-Math.PI / 2, 0, 0]} // Rota el plano horizontalmente para que actúe como suelo.
+        receiveShadow
+        material={material}
+      >
+        <planeGeometry
+          args={[OCEAN_SIZE, OCEAN_SIZE, OCEAN_SEGMENTS, OCEAN_SEGMENTS]}
+        />
+      </mesh>
+      {/* Ajusta aquí la profundidad y el color del fondo marino. */}
+      <mesh position-y={-40} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[OCEAN_SIZE, OCEAN_SIZE, 1, 1]} />
+        <meshBasicMaterial color="#052336" />
+      </mesh>
+    </group>
   );
 }
