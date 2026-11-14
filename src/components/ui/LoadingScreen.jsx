@@ -31,9 +31,10 @@ export default function LoadingScreen() {
   // Evalúa el estado de descarga. Controla que el progreso avance unidireccionalmente y evita bloqueos permanentes al visitante si una textura secundaria falla.
   useEffect(() => {
     if (ready) return; // Si ya está listo, no vuelve a evaluar nada
-    if (progress >= 100 && !active)
-      setReady(true); // Carga exitosa: 100% completado y sin descargas activas
-    else if (errors.length > 0) setReady(true); // Plan de contingencia: Si hay errores en consola, desbloquea la UI de igual forma
+    if (progress >= 100 && !active || errors.length > 0) {
+      const id = setTimeout(() => setReady(true), 0);
+      return () => clearTimeout(id);
+    }
   }, [progress, active, errors, ready]);
 
   // EFECTO 2: TEMPORIZADOR DE RESPALDO

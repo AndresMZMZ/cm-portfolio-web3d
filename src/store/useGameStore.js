@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-// ENUMERACIÓN DE MODOS DEL JUEGO (Máquina de estados):
+// MODOS DEL JUEGO (Máquina de estados):
 // Object.freeze bloquea este objeto para que ningún otro script pueda modificar o alterar 
 export const MODES = Object.freeze({
   INTRO: 'intro',           // Fase inicial: pantalla de carga activa y controles del barco congelados.

@@ -1,6 +1,6 @@
 import { CAMERA } from "@/config/camera";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 
 // Seguimiento de cámara en el barco:
@@ -16,16 +16,13 @@ export default function FollowCamera() {
   const shipRef = useRef(null);
   const ready = useRef(false);
   // Vectores reutilizados en cada fotograma para evitar crear objetos continuamente.
-  const v = useMemo(
-    () => ({
+  const vectors = useRef({
       offset: new THREE.Vector3(),
       desired: new THREE.Vector3(),
       forward: new THREE.Vector3(),
       lookTarget: new THREE.Vector3(),
       lookCurrent: new THREE.Vector3(),
-    }),
-    [],
-  );
+  });
 
   useFrame(({ camera }, delta) => {
     // Busca el barco por su nombre; Ship.jsx lo registra como "ship".
@@ -35,6 +32,7 @@ export default function FollowCamera() {
     if (!ship) return;
 
     // Calcula la posición detrás y arriba del barco según su orientación y CAMERA.offset.
+    const v = vectors.current;
     v.offset.set(...CAMERA.offset).applyQuaternion(ship.quaternion);
     v.desired.copy(ship.position).add(v.offset);
     // Calcula el punto de enfoque por delante de la proa y ajusta su altura.

@@ -23,3 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 assets-src/
+
+# SEGURIDAD: archivos .env solo para entorno local privado.
+# No subir a GitHub ni dejarlos públicos: ya que puede robar tus llaves 
+# y tomar control de tu servicio externo.
+.env
+.env.*
+!.env.example
