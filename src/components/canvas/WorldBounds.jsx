@@ -47,7 +47,7 @@ export default function WorldBounds() {
     },
   ];
   
-  // Filtra el contacto para reaccionar únicamente cuando el cuerpo físico es el barco (name="ship")
+  // Franjas sensoras interiores (sensor): detectan la entrada del barco antes del muro sin frenarlo
   const warnHalf = warn / 2;
   const warningZones = [
     {
