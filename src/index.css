@@ -15,3 +15,8 @@ html, body {
   /* BLOQUEO DE SCROLL: Oculta por completo las barras de desplazamiento a nivel de navegador. */
   overflow: hidden; 
 }
+/* Cursor de estrella náutica (HU04), solo sobre la escena 3D. url() = imagen; 16 16 = punto activo (hotspot) 
+donde cuenta el clic, el centro de una imagen de 32x32; auto = cursor normal si la imagen no carga. */
+canvas {
+  cursor: url("/images/cursor-estrella.png") 16 16, auto;
+}

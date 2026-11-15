@@ -33,3 +33,13 @@
   - **Herramientas:** Generada con Google Gemini y optimizada con <a href="https://squoosh.app/" target="_blank">Squoosh.app</a> (formato WebP).
   - **Inspiración y Referencia:** Basada visualmente en el diseño <a href="https://pngtree.com/freepng/vintage-nautical-wind-rose-compass-with-sea-monster-and-pocket-watch-vector-for-adventure-map-design_24105489.html" target="_blank">Vintage Nautical Wind Rose de Pngtree</a>.
   - **Fecha de creación:** 15 de Octubre de 2026.
+
+  ---
+<h2 style="border-bottom: none;">Imágenes e Iconos</h2>
+
+- **Cursor de estrella náutica (`cursor-estrella.png`):**
+  - **Autor:** Diseño propio asistido por Inteligencia Artificial (Google Gemini).
+  - **Inspiración visual:** <a href="https://mx.pinterest.com/pin/682365781073785635/" target="_blank">Pinterest - Rosa náutica / Estrella de compás</a>
+  - **Licencia:** Uso libre para el proyecto (obra original generada mediante prompt).
+  - **Modificaciones:** Exportado a PNG de 32×32 px con fondo transparente y configurado como puntero personalizado sobre el lienzo 3D en `src/index.css`.
+---
