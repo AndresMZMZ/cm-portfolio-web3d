@@ -15,27 +15,17 @@ export const ISLANDS = [
     minSpeed: 0.35, // Velocidad mínima permitida dentro del radio, como fracción de SHIP.speed (0.35 = 35%).
     description: 'Isla principal del portafolio con proyectos de desarrollo web y diseño 3D.',
 
-    // Colisionadores fijos de la isla (HU09 / IslandColliders.jsx)
-    // Bordes independientes de cada caja amarilla relativos al centro de la isla.
-    // Modificar una cara mueve ese lado sin estirar las otras cinco. (el límite exterior del mar se ajusta en config/world.js).
+    // Collider continuo para la roca y el muelle; evita juntas y solapes entre cajas.
+    // Los bordes son relativos al centro de la isla; los límites del mundo están en config/world.js.
     colliders: [
       {
-        label: 'roca',
+        label: 'isla',
         left: -75,   // borde izquierdo (-X)
-        right: 93,   // borde derecho (+X)
+        right: 121.52, // borde derecho (+X)
         back: -167,  // borde trasero (-Z, hacia el fondo)
         front: 35,   // borde delantero (+Z, hacia donde nace el barco)
         bottom: -65, // borde inferior (-Y,sumergido bajo el agua)
         top: 7, // borde superior (+Y)
-      },
-      {
-        label: 'muelle',
-        left: -9.48,
-        right: 121.52, 
-        back: -135.48,
-        front: 5, 
-        bottom: -65, 
-        top: 7, 
       },
     ],
   },

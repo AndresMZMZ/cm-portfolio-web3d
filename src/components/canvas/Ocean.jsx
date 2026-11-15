@@ -1,3 +1,4 @@
+import { wavesToGlsl } from "@/utils/waves";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
 import * as THREE from "three";
@@ -42,9 +43,7 @@ const VERTEX_DECLARATIONS = /* glsl */ `
   void waveCalc(vec2 p, out float h, out vec2 g) {
     h = 0.0;
     g = vec2(0.0);
-    addWave(p, vec2(1.0, 0.4),  0.05, 0.45, 1.0, h, g);  // Ola macro (Lenta y masiva)
-    addWave(p, vec2(-0.3, 1.0), 0.11, 0.25, 1.4, h, g);  // Ola media (Dirección transversal)
-    addWave(p, vec2(0.7, -0.8), 0.23, 0.12, 2.0, h, g);  // Ola micro (Rápida y superficial)
+    ${wavesToGlsl()}
   }
 `;
 

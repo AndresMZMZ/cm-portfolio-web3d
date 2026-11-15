@@ -11,7 +11,7 @@ export const LIGHTHOUSE = {
   period: 8,                  
 
   // ATRIBUTOS LUMÍNICOS:
-  color: '#fff1c2',           // Tono de la luz
+  color: '#fff1c2',         // Tono de la luz
   intensity: 0.9,             // Opacidad visual:el efecto de niebla/polvo iluminado
   spotIntensity: 3000,        // Intensidad de la luz física (SpotLight) que ilumina dinámicamente el barco y el agua al pasar
 
