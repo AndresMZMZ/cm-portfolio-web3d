@@ -12,8 +12,13 @@ export const SHIP = {
 // Parámetros de la cápsula de colisión (CapsuleCollider en Ship.jsx) (HU09):
 // Se usa una cápsula acostada en vez de una caja para que el barco deslice suavemente al rozar esquinas.
   colliderHalfLength: 54, // mitad de la longitud del casco del barco
-  colliderRadius: 20,      // Radio de la cápsula del casco del barco
+  colliderRadius: 20,     // Radio de la cápsula del casco del barco
   colliderOffset: [0, 10, 0], // Desplazamiento del colisionador respecto al centro del barco (X, Y, Z)
+
+// Vaivén del barco combinado con el oleaje (HU08). Súbelos para un balanceo más visible.
+  swayHeave: 1.5, // subida y bajada vertical
+  swayPitch: 0.2, // cabeceo adelante/atrás
+  swayRoll: 0.5, // balanceo lateral izquierda/derecha
 }
 // Coordenadas donde aparece el barco en el lado +Z de la isla principal
 export const SHIP_SPAWN_POSITION = [
