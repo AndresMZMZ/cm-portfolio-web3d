@@ -3,10 +3,10 @@ import { CuboidCollider, RigidBody } from "@react-three/rapier";
 
 // Convierte los seis bordes independientes relativos al centro de la isla
 // en el centro y las medias dimensiones que exige el motor de física (Rapier).
-// - left / right (Izquierda / Derecha en eje X): Calculan el centro horizontal y la mitad del ancho.
-// - bottom / top (Inferior / Superior en eje Y): Calculan la altura central y la mitad del grosor vertical.
-// - back / front (Atrás / Adelante en eje Z): Calculan el centro de profundidad y la mitad del largo.
-// - halfExtents (Medias dimensiones): Si ya vienen definidas manualmente, se usan directamente sin convertir.
+// - left + right (Izquierda + Derecha en eje X): Calculan el centro horizontal y la mitad del ancho.
+// - bottom + top (Inferior + Superior en eje Y): Calculan la altura central y la mitad del grosor vertical.
+// - back + front (Atrás + Adelante en eje Z): Calculan el centro de profundidad y la mitad del largo.
+// - halfExtents (Medias dimensiones): ya vienen definidas manualmente, se usan directamente sin convertir.
 function resolveCollider(collider) {
   if (collider.halfExtents) {
     return { position: collider.position, halfExtents: collider.halfExtents };

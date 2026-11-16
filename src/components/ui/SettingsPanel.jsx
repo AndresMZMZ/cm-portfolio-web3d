@@ -6,7 +6,7 @@ import "./SettingsPanel.css";
 // Panel de configuración inicial (HU02): aparece al pulsar el botón de inicio de la pantalla de carga.
 // Permite elegir si el audio está activado y muestra las instrucciones de control.
 // Es HTML normal fuera del Canvas, igual que ProjectPanel (clase 6: HTML sobre el canvas).
-// Nombres en inglés: audioEnabled (audio activado), open (abierto), ref (referencia).
+// audioEnabled (audio activado), ref (referencia).
 export default function SettingsPanel() {
   const mode = useGameStore((s) => s.mode);
   const audioEnabled = useGameStore((s) => s.audioEnabled);

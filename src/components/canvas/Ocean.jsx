@@ -4,7 +4,7 @@ import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
 //  CONFIGURACIÓN DEL ENTORNO DEL OCÉANO:
-const OCEAN_SIZE = 8000;     // Extensión (ancho por largo). Reducir el tamaño del plano si va mal en cp sin targeta grafica
+const OCEAN_SIZE = 8000;     // Extensión (ancho por largo).
 const OCEAN_SEGMENTS = 512; // Densidad de la malla (subdivisiones); a mayor valor, más detalle en las olas.
 
 // PARÁMETROS DEL MAR (Variables de control estético y visual):
@@ -50,7 +50,7 @@ const VERTEX_DECLARATIONS = /* glsl */ `
 /**
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║ FRAGMENT DECLARATIONS (GLSL)                                             ║
- * ║ Calcula el color píxel a píxel, combinando agua profunda, espuma y sol. ║
+ * ║ Calcula el color píxel a píxel, combinando agua profunda, espuma y sol.  ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  */
 const FRAGMENT_DECLARATIONS = /* glsl */ `
@@ -88,9 +88,9 @@ const FRAGMENT_DECLARATIONS = /* glsl */ `
 export default function Ocean() {
   const shaderRef = useRef(null);
   
-  //  INYECCIÓN DE SHADERS "sombreado" (onBeforeCompile):
+  // "sombreado" (onBeforeCompile):
   // El material se genera una sola vez. Modificamos el MeshStandardMaterial nativo de Three.js 
-  // inyectando nuestro código GLSL personalizado en puntos clave de su ciclo de compilación.
+  // insertando nuestro código GLSL personalizado en puntos clave de su ciclo de compilación.
   const material = useMemo(() => {
     const m = new THREE.MeshStandardMaterial({
       roughness: 0.15,
@@ -167,7 +167,7 @@ export default function Ocean() {
   }, []);
 
   // COMPENSACIÓN DE RENDIMIENTO EN GPU:
-  // A diferencia del método del docente que calcula olas en la CPU (saturando el hilo principal),
+  // A diferencia del método del profesor que calcula olas en la CPU (saturando el hilo principal),
   // aquí los cálculos complejos corren en la tarjeta gráfica a nivel de hardware.
   // useFrame únicamente se encarga de enviar el contador de tiempo global para la animación.
   useFrame(({ clock }) => {

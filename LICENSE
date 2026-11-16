@@ -1,0 +1,45 @@
+LICENCIA DEL PROYECTO — PORTAFOLIO INTERACTIVO WEB3D
+Copyright (c) 2026 Camilo Andrés Muñoz. Todos los derechos reservados.
+
+Este repositorio contiene tres categorías de recursos con condiciones de uso diferenciadas:
+
+================================================================================
+1. CONTENIDO PERSONAL E IDENTIDAD DEL AUTOR (TODOS LOS DERECHOS RESERVADOS)
+================================================================================
+Los datos personales, biografía, formación académica, enlaces de contacto,
+hoja de vida, textos descriptivos del perfil (incluidos en `src/data/portfolio.js`
+y componentes de interfaz) así como los recursos gráficos propios (`public/images/cursor-estrella.png`)
+son propiedad exclusiva de Camilo Andrés Muñoz.
+
+- NO se autoriza copiar, redistribuir, modificar ni utilizar la identidad,
+  nombre, trayectoria académica o datos personales del autor en otros portafolios,
+  sitios web o proyectos derivados.
+
+================================================================================
+2. CÓDIGO FUENTE Y ARQUITECTURA DE SOFTWARE (LICENCIA MIT CON ATRIBUCIÓN)
+================================================================================
+El código fuente de programación de la aplicación (`src/components/`, `src/config/`,
+`src/hooks/`, `src/store/`, `src/utils/` y archivos de configuración) se distribuye
+bajo la Licencia MIT, siempre que se eliminen los datos personales descritos en la
+Sección 1 antes de cualquier reutilización:
+
+Se concede permiso, de forma gratuita, a cualquier persona que obtenga una copia
+de este software y de los archivos de documentación asociados (el "Software"),
+para utilizar el código con fines educativos o de desarrollo, incluyendo los
+derechos de usar, copiar, modificar y fusionar, sujeto a las siguientes condiciones:
+
+El aviso de copyright anterior y este aviso de permiso se incluirán en todas
+las copias o partes sustanciales del Software, y cualquier uso deberá reemplazar
+los datos personales e identidad del autor por los propios.
+
+EL SOFTWARE SE PROPORCIONA "TAL CUAL", SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
+IMPLÍCITA. EN NINGÚN CASO EL AUTOR SERÁ RESPONSABLE DE NINGÚN RECLAMO, DAÑO U
+OTRA RESPONSABILIDAD DERIVADA DEL USO DEL SOFTWARE.
+
+================================================================================
+3. MODELOS 3D, TIPOGRAFÍAS Y RECURSOS DE TERCEROS
+================================================================================
+Los modelos 3D (`public/models/`), tipografías (`public/fonts/`) y recursos
+externos pertenecen a sus respectivos autores y se rigen estrictamente por sus
+licencias originales (como CC-BY-4.0 y CC-BY-NC-SA-4.0), detalladas en el
+archivo `docs/CREDITOS.md`.

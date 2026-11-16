@@ -3,8 +3,7 @@ import { useGameStore } from "@/store/useGameStore";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 
-// Borde del mundo (HU09): 4 muros fijos que detienen el barco y 4 sensores en una franja
-// anterior a cada muro que activan el aviso "Regresa al mar abierto" (clase 07: sensor + onIntersectionEnter).
+// Bordes (Bounds) del mundo (HU09): 4 muros fijos que detienen el barco que activan el aviso "Regresa al mar abierto" (clase 07: sensor + onIntersectionEnter).
 export default function WorldBounds() {
   const setOutOfBounds = useGameStore((s) => s.setOutOfBounds);
   // En una esquina el barco toca dos franjas a la vez; se cuentan para apagar el aviso solo al salir de ambas.
