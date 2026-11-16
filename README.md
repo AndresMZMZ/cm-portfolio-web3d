@@ -3,7 +3,7 @@
 [![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-Fast-purple?logo=vite)](https://vitejs.dev/)
 [![Three.js](https://img.shields.io/badge/Three.js-3D-black?logo=three.js)](https://threejs.org/)
-[![Status](https://img.shields.io/badge/Status-Sprint%201-yellow)]()
+[![Status](https://img.shields.io/badge/Status-Sprint%202-yellow)]()
 
 Portafolio web personal desarrollado con React y Three.js. El visitante navega por un océano en un barco y, al acercarse a islas específicas, puede abrir un panel con información que aporta al portafolio personal del autor.
 
@@ -41,7 +41,12 @@ Portafolio web personal desarrollado con React y Three.js. El visitante navega p
 - Escena 3D con océano animado e islas.
 - Navegación del barco con teclado y reducción gradual de velocidad cerca de las islas.
 - Título 3D y botón de interacción cuando el barco entra en el radio de las islas.
-- Panel con información del perfil.
+- Panel con información del perfil y los proyectos.
+- Colisiones físicas con Rapier: el barco no atraviesa las islas ni sale del mapa, y un aviso HTML aparece al acercarse al borde del mundo.
+- Vaivén del barco con el oleaje, calculado con las mismas funciones de ola del océano.
+- Panel de configuración inicial con interruptor de audio e instrucciones de control.
+- Isla de redes y hoja de vida: carteles 3D clicables (GitHub, Hoja de vida, Facebook) y panel con estudios y gustos. Un enlace sin configurar se muestra como "Próximamente".
+- Cursor personalizado de estrella náutica sobre el lienzo 3D.
 - Pantalla de carga con progreso y botón para iniciar la experiencia.
 - Cámara libre de depuración, disponible en desarrollo con el parámetro `?debug`.
 
@@ -50,6 +55,7 @@ Portafolio web personal desarrollado con React y Three.js. El visitante navega p
 - **React 19** y **Vite** — Entorno de desarrollo rápido.
 - **Three.js**, **React Three Fiber** y **Drei** — Renderizado de la escena 3D.
 - **Zustand** — Gestión del estado global de navegación e interacción.
+- **@react-three/rapier** — Físicas y colisiones del barco, las islas y los límites del mundo.
 
 ## 📋 Requisitos
 
@@ -76,12 +82,17 @@ npm run dev
 
 ## 🎮 Controles
 
-| Teclas                     | Acción                                                 |
-| -------------------------- | ------------------------------------------------------ |
-| Flecha arriba / abajo      | Avanzar / retroceder con el barco                      |
-| Flecha izquierda / derecha | Girar el barco                                         |
-| Enter                      | Abrir el panel cuando el barco está cerca de las islas |
-| Escape                     | Cerrar el panel o volver a la navegación               |
+| Teclas                     | Acción                                                          |
+| -------------------------- | --------------------------------------------------------------- |
+| Flecha arriba / abajo      | Avanzar / retroceder con el barco                               |
+| Flecha izquierda / derecha | Girar el barco                                                  |
+| Enter o F                  | Abrir el panel cuando el barco está cerca de una isla           |
+| Q / E                      | Preparar los cañones de babor (izquierda) o estribor (derecha)  |
+| Escape                     | Cerrar el panel o volver a la navegación                        |
+
+> W, A, S, D (mover la mira) y Espacio (disparar) ya tienen tecla asignada, pero la acción llega en el Sprint 3.
+>
+> También puedes hacer clic en los carteles de la isla de redes cuando el barco esté cerca.
 
 ### 🐛 Cámara de depuración
 
@@ -95,12 +106,12 @@ http://localhost:5173/?debug
 
 | Comando              | Función                                     |
 | -------------------- | ------------------------------------------- |
-| 🟢 `npm run dev`     | Inicia el servidor de desarrollo.           |
-| 🏗️ `npm run build`   | Genera la versión de producción en `dist/`. |
-| 🚀 `npm run preview` | Sirve localmente la versión de producción.  |
 | 🧹 `npm run lint`    | Ejecuta Oxlint.                             |
+| 🏗️ `npm run build`   | Genera la versión de producción en `dist/`. |
+| 🟢 `npm run dev`     | Inicia el servidor de desarrollo.           |
+| 🚀 `npm run preview` | Sirve localmente la versión de producción.  |
 
-## 📂 Estructura del proyecto — Sprint 1
+## 📂 Estructura del proyecto — Sprint 2
 
 <details>
 <summary>Ver estructura de carpetas</summary>
@@ -111,15 +122,18 @@ cm-portfolio-web3d/
 │   └── 📁 workflows/                 # Flujos de trabajo (CI/CD)
 │       └── ⚙ ci.yml                  # Integración continua
 ├── 📁 docs/                          # Documentación y créditos
-│   └── 📄 CREDITOS.md                # Atribuciones y licencias de recursos
+│   ├── 📄 CREDITOS.md                # Atribuciones y licencias de recursos
+│   └── 🖼 preview.gif                # Vista previa del README
 ├── 📁 public/                        # Recursos estáticos públicos
 │   ├── 🌐 favicon.svg                # Icono del sitio
 │   ├── 📁 fonts/                     # Tipografías personalizadas
 │   │   └── 📄 PirataOne-Regular.ttf  # Fuente principal (Pirata One)
 │   ├── 📁 images/                    # Recursos gráficos
+│   │   ├── 🖼 cursor-estrella.png    # Cursor de estrella náutica
 │   │   └── 🖼 rosaDeLosVientos.webp  # Imagen decorativa
 │   └── 📁 models/                    # Archivos 3D (.glb) estáticos
 │       ├── 📦 barco-prueba.glb       # Modelo 3D del barco
+│       ├── 📦 isla-redes.glb         # Modelo 3D de la isla de redes
 │       └── 📦 lighthouse.glb         # Modelo 3D del faro
 ├── 📁 src/                           # Código fuente de la app
 │   ├── 📁 components/                # Componentes de React
@@ -128,24 +142,36 @@ cm-portfolio-web3d/
 │   │   │   │   └── ◈ BarcoPrueba.jsx # Mallas del modelo del barco
 │   │   │   ├── ◈ Atmosphere.jsx      # Cielo e iluminación
 │   │   │   ├── ◈ FollowCamera.jsx    # Cámara que sigue al barco
-│   │   │   ├── ◈ Island.jsx          # Modelo de la isla
+│   │   │   ├── ◈ Island.jsx          # Modelo de la isla del faro
+│   │   │   ├── ◈ IslandColliders.jsx # Colisionadores de las islas
+│   │   │   ├── ◈ IslandRedes.jsx     # Isla de redes y hoja de vida
+│   │   │   ├── ◈ IslandSigns.jsx     # Carteles clicables de la isla de redes
 │   │   │   ├── ◈ IslandTitle.jsx     # Título 3D de la isla
 │   │   │   ├── ◈ LighthouseBeam.jsx  # Haz giratorio del faro
 │   │   │   ├── ◈ Ocean.jsx           # Océano animado
-│   │   │   └── ◈ Ship.jsx            # Movimiento del barco
+│   │   │   ├── ◈ Ship.jsx            # Movimiento y colisiones del barco
+│   │   │   └── ◈ WorldBounds.jsx     # Muros y sensores del límite del mundo
 │   │   └── 📁 ui/                    # Interfaz HTML y estilos
+│   │       ├── ◈ BoundaryWarning.jsx # Aviso al acercarse al borde del mundo
+│   │       ├── ◈ ExternalLink.jsx    # Enlace externo o "Próximamente"
 │   │       ├── ◈ IslandPrompt.jsx    # Botón para abrir la isla cercana
 │   │       ├── ▤ LoadingScreen.css   # Estilos de la pantalla de carga
 │   │       ├── ◈ LoadingScreen.jsx   # Pantalla inicial y progreso
 │   │       ├── ▤ ProjectPanel.css    # Estilos del panel de proyectos
-│   │       └── ◈ ProjectPanel.jsx    # Panel de proyectos y trayectoria
+│   │       ├── ◈ ProjectPanel.jsx    # Panel de proyectos y trayectoria
+│   │       ├── ◈ ResumePanel.jsx     # Panel de estudios, gustos y redes
+│   │       ├── ▤ SettingsPanel.css   # Estilos del panel de configuración
+│   │       └── ◈ SettingsPanel.jsx   # Audio e instrucciones de control
 │   ├── 📁 config/                    # Parámetros ajustables de la escena
 │   │   ├── ⌨ camera.js               # Configuración de la cámara
+│   │   ├── ⌨ controls.js             # Controles mostrados en el panel de configuración
 │   │   ├── ⌨ environment.js          # Luz y posición del sol
 │   │   ├── ⌨ islands.js              # Datos y posiciones de las islas
 │   │   ├── ⌨ keyboardMap.js          # Controles de teclado
 │   │   ├── ⌨ lighthouse.js           # Ajustes del faro
-│   │   └── ⌨ ship.js                 # Físicas y movimiento del barco
+│   │   ├── ⌨ ship.js                 # Físicas y movimiento del barco
+│   │   ├── ⌨ waves.js                # Parámetros del oleaje y del vaivén
+│   │   └── ⌨ world.js                # Límites del mundo
 │   ├── 📁 data/                      # Datos y contenido
 │   │   └── ⌨ portfolio.js            # Perfil, prácticas y enlaces
 │   ├── 📁 hooks/                     # Hooks personalizados
@@ -153,7 +179,10 @@ cm-portfolio-web3d/
 │   ├── 📁 store/                     # Estado global (Zustand)
 │   │   └── ⊞ useGameStore.js         # Estado de navegación e interfaz
 │   ├── 📁 utils/                     # Funciones de utilidad
-│   │   └── ⌨ islandProximity.js      # Proximidad y frenado en islas
+│   │   ├── ⌨ islandModel.js          # Preparación y calibración de modelos de isla
+│   │   ├── ⌨ islandProximity.js      # Proximidad y frenado en islas
+│   │   ├── ⌨ signActions.js          # Acción de cada cartel (panel o enlace)
+│   │   └── ⌨ waves.js                # Funciones de ola en JavaScript
 │   ├── ▤ App.css                     # Estilos globales de la App
 │   ├── ◈ App.jsx                     # Composición de la app y escena
 │   ├── ▤ index.css                   # Estilos base
@@ -174,10 +203,7 @@ cm-portfolio-web3d/
 
 Este proyecto se encuentra en desarrollo activo.
 
-<!--
-Para agregar un sprint nuevo, añade filas con el entregable real, por ejemplo:
-| 2 | Descripción del entregable | 🔄 |
--->
+Este proyecto se encuentra en desarrollo activo.
 
 | Sprint | Entregable                        | Estado |
 | :----: | --------------------------------- | :----: |
@@ -185,6 +211,13 @@ Para agregar un sprint nuevo, añade filas con el entregable real, por ejemplo:
 |   1    | Panel de proyectos interactivo    |   ✅   |
 |   1    | Pantalla de carga con progreso    |   ✅   |
 |   1    | Despliegue en producción (Vercel) |   ✅   |
+|   2    | Modelos optimizados para web (HT05) |   ✅   |
+|   2    | Panel de configuración con audio e instrucciones (HU02) |   ✅   |
+|   2    | Vaivén del barco con el oleaje (HU08) |   ✅   |
+|   2    | Colisiones con islas y límites del mundo (HU09) |   ✅   |
+|   2    | Cursor de estrella náutica (HU04) |   ✅   |
+|   2    | Isla de redes y hoja de vida (HU28) |   ✅   |
+
 
 > ✅ Completado · 🔄 En progreso · ⏳ Pendiente
 
@@ -192,7 +225,8 @@ Para agregar un sprint nuevo, añade filas con el entregable real, por ejemplo:
 
 Los modelos 3D, tipografías e imágenes utilizadas tienen sus respectivas atribuciones. Consulta el archivo [CREDITOS.md](docs/CREDITOS.md) para más detalles.
 
-El código de este proyecto se distribuye bajo la licencia [MIT](LICENSE).
+El código fuente de este proyecto se distribuye bajo licencia MIT con atribución, mientras que los datos personales e identidad del autor tienen todos los derechos reservados. Consulta el archivo [LICENSE](LICENSE) para más información.
+
 
 ## 👤 Autor
 

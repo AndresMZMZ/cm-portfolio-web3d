@@ -50,7 +50,6 @@ export const useGameStore = create((set) => ({
   // Regla estricta: Si el jugador presiona Esc estando todavía en la pantalla de carga (INTRO), el estado se ignora (s)
   // para evitar que se salte la carga. En cualquier otro modo, devuelve al barco a NAVEGACIÓN y limpia el panel activo.
   backToNavigation: () =>
-    // inicio cambio, LINEAS NUEVAS
     set((s) =>
       s.mode === MODES.INTRO || s.mode === MODES.SETTINGS
         ? s

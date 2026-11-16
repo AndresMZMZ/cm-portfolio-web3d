@@ -3,8 +3,8 @@
 // Un enlace vacío ('') se mostrará automáticamente como "Próximamente".
 
 export const PROFILE = {
-  name: 'Camilo Andes Muñoz', // Reemplaza con tu nombre completo
-  initials: 'CM', // Reemplaza con tus iniciales
+  name: 'Camilo Andres Muñoz', 
+  initials: 'CM',
   roles: [
     'Estudiante de Ingeniería de Sistemas', 
     'Full-Stack Developer', 
@@ -25,7 +25,7 @@ export const PRACTICES = [
   { 
     week: 2, 
     title: 'Anillo, nudo y escena controlada con el rostro', 
-    description: 'Geometrías animadas con texto emisivo, un modelo 3D de un lago y la escena movida con la cabeza usando la cámara web.', 
+    description: 'Geometrías animadas con texto expresivo, un modelo 3D de un lago y la escena movida con la cabeza usando la cámara web.', 
     url: '' 
   },
   { 

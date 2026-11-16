@@ -10,7 +10,7 @@ import { CapsuleCollider, RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 import * as THREE from "three";
 
-// Controla el barco en la escena: movimiento, giros, posición inicial y altura sobre el agua.
+// Controla el barco (Ship) en la escena: movimiento, giros, posición inicial y altura sobre el agua.
 // Sus valores ajustables se encuentran en config/ship.js.
 
 // Si el barco avanza "de lado", cambia este valor a 0, Math.PI / 2, Math.PI o -Math.PI / 2
@@ -215,7 +215,7 @@ export default function Ship() {
         );
       })}
       {/* CONTENEDOR DE VAIVÉN Y CORRECCIÓN VISUAL:
-          swayRef aplica el baiben  y balanceo de las olas (HU08).
+          swayRef aplica el vaivén  y balanceo de las olas (HU08).
           El grupo interno aplica el desfase de rotación (MODEL_YAW_OFFSET) y la altura 'waterline'. */}
         <group ref={swayRef}>
           <group rotation={[0, MODEL_YAW_OFFSET, 0]} position-y={-SHIP.waterline}>

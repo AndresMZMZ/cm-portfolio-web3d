@@ -1,7 +1,7 @@
 import { ISLANDS } from '@/config/islands'
 import { MODES, useGameStore } from '@/store/useGameStore'
 
-// Muestra el botón en pantalla para interactuar con la isla más cercana.
+// Muestra el botón en pantalla para interactuar con la isla más cercana (Prompt).
 // El rango de activación se ajusta en config/islands.js; el aspecto está definido aquí.
 export default function IslandPrompt() {
   // ESTADO GLOBAL:'mode': Obtiene la fase actual (ej. Menú, Navegación, Viendo Panel, etc.).
@@ -11,12 +11,11 @@ export default function IslandPrompt() {
   // 'openPanel': permite abrir la información detallada de una isla.
   const openPanel = useGameStore((s) => s.openPanel)
 
-  // COMPROBACIONES DE SEGURIDAD (Condiciones de renderizado):
+  // SEGURIDAD (Condiciones de renderizado):
   // Si el usuario no está navegando libremente O no está cerca de ninguna isla, el botón se destruye (no se dibuja nada).
   // El botón solo aparece en modo navegación y dentro del rango de una isla.
   if (mode !== MODES.NAVIGATION || !nearIsland) return null
-  // BÚSQUEDA DE DATOS:
-  // Busca en la base de datos de configuración (ISLANDS) el objeto que coincida con el ID de la isla cercana.
+  // BÚSQUEDA DE DATOS: Busca en la base de datos de configuración (ISLANDS) el objeto que coincida con el ID de la isla cercana.
   const island = ISLANDS.find((i) => i.id === nearIsland)
   // Si por alguna razón el ID guardado en el estado no existe en la configuración, cancela el renderizado.
   if (!island) return null

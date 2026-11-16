@@ -3,7 +3,6 @@ import { useGLTF } from "@react-three/drei";
 import { useEffect, useMemo } from "react";
 
 // Isla de redes y HV (HU28): carga public/models/isla-redes.glb y lo coloca según config/islands.js.
-// El modelo se centra con las mallas visibles de la isla y se nivela con la superficie de arena.
 // Aquí se manipula la escala con modelScale en config/islands.js.
 const MODEL_URL = "/models/isla-redes.glb";
 const HIDDEN_NODES = ["Sea_Sea_0"];
@@ -31,7 +30,7 @@ export default function IslandRedes({ island }) {
     return { model: clone, measures: measured };
   }, [scene]);
 
-  // Solo en desarrollo: imprime en la consola los valores sugeridos para pegar en config/islands.js.
+  // Solo en desarrollo: imprime en la consola los valores sugeridos para pegar en config/islands.js. Y  de este modo no tener que medir manualmente la isla en Blender.
   useEffect(() => {
     if (!import.meta.env.DEV) return;
     if (!measures) {

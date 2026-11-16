@@ -5,11 +5,10 @@ import { MODES, useGameStore } from "@/store/useGameStore";
 import { useEffect, useRef } from "react";
 import "./ProjectPanel.css";
 
-// Panel de la isla de redes y hoja de vida (HU28): estudios, gustos, redes y enlace a la hoja de vida.
+// Panel de la isla de redes (HU28):
 // Se abre con el cartel "Hoja de vida" o con Enter/F cerca de la isla (activePanel "redes").
 // Reutiliza el aspecto de ProjectPanel (clases pp-*) y, como él, es HTML normal fuera del Canvas (clase 6).
-// Nombres en inglés: open (abierto), ref (referencia), studies (estudios), interests (gustos).
-// Puedes renombrarlos a tu gusto.
+// ref (referencia), interests (gustos).
 export default function ResumePanel() {
   const mode = useGameStore((s) => s.mode);
   const activePanel = useGameStore((s) => s.activePanel);

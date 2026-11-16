@@ -4,19 +4,18 @@ import { resolveSignAction } from "@/utils/signActions";
 import { Html, Text } from "@react-three/drei";
 import { useState } from "react";
 
-// Carteles clicables de la isla de redes (HU28): una tabla de madera sobre un poste con el texto encima.
-// Sus posiciones se definen en config/islands.js (signs), relativas al centro de la isla; ajústalas con ?debug.
-// El docente (clase 5) usa eventos de R3F (onClick, onPointerOver) y Text de drei (clase 6); aquí se combinan.
-// Nombres en inglés: Sign (cartel), hovered (con el puntero encima), clickable (se puede pulsar),
-// action (acción), POST_HEIGHT (alto del poste), BOARD (tabla: ancho y alto). Puedes renombrarlos a tu gusto.
-const SIGN_FONT = "/fonts/PirataOne-Regular.ttf"; // La misma fuente de los letreros de las islas
+// Signs (señales); Carteles clicables de la isla de redes (HU28): una tabla de madera sobre un poste con el texto encima.
+// Sus posiciones se definen en config/islands.js (signs), relativas al centro de la isla
+// El profe en la (clase 5) usa eventos de R3F (onClick, onPointerOver) y Text de drei (clase 6); aquí se combinan.
+// Nombres en inglés: Sign (cartel), hovered (con el puntero encima),POST_HEIGHT (alto del poste), BOARD (tabla: ancho y alto).
+const SIGN_FONT = "/fonts/PirataOne-Regular.ttf";
 const POST_HEIGHT = 22;
 const BOARD = [30, 16];
-
+//esta función Sign() dibuja un cartel individual, y IslandSigns() dibuja todos los carteles de la isla.
 function Sign({ island, sign }) {
   const [hovered, setHovered] = useState(false);
   const action = resolveSignAction(sign, SOCIALS);
-  // Solo se puede pulsar navegando y estando cerca de esta isla (criterio: "llego a la isla de redes").
+  // Solo se puede pulsar navegando y estando cerca de esta isla (criterio de la HU: "llego a la isla de redes").
   const active = useGameStore(
     (s) => s.mode === MODES.NAVIGATION && s.nearIsland === island.id,
   );
@@ -27,18 +26,18 @@ function Sign({ island, sign }) {
       : action.type === "panel"
         ? `Ver ${sign.label}`
         : `${sign.label} · Próximamente`;
-
+// Al hacer clic en un cartel, se abre un panel o una pestaña nueva según el tipo de acción.
   const handleClick = (event) => {
     event.stopPropagation(); // El clic no sigue hacia los objetos que haya detrás
     if (!clickable) return;
     if (action.type === "panel") {
       useGameStore.getState().openPanel(action.panel);
     } else {
-      // noopener y noreferrer: la pestaña nueva no puede acceder a la ventana del portafolio.
+      // noopener y noreferrer: la pestaña nueva no puede abrirse a la ventana del portafolio.
       window.open(action.url, "_blank", "noopener,noreferrer");
     }
   };
-
+// La altura del cartel se calcula para que la tabla quede justo encima del poste, con un pequeño margen de 2 unidades.
   const boardY = POST_HEIGHT + BOARD[1] / 2 - 2;
 
   return (
