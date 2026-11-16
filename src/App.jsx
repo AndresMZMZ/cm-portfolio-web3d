@@ -2,6 +2,8 @@ import Atmosphere from "@/components/canvas/Atmosphere";
 import FollowCamera from "@/components/canvas/FollowCamera";
 import Island from "@/components/canvas/Island";
 import IslandColliders from "@/components/canvas/IslandColliders";
+import IslandRedes from "@/components/canvas/IslandRedes";
+import IslandSigns from "@/components/canvas/IslandSigns";
 import IslandTitle from "@/components/canvas/IslandTitle";
 import LighthouseBeam from "@/components/canvas/LighthouseBeam";
 import Ocean from "@/components/canvas/Ocean";
@@ -11,6 +13,7 @@ import BoundaryWarning from "@/components/ui/BoundaryWarning";
 import IslandPrompt from "@/components/ui/IslandPrompt";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import ProjectPanel from "@/components/ui/ProjectPanel";
+import ResumePanel from "@/components/ui/ResumePanel";
 import SettingsPanel from "@/components/ui/SettingsPanel";
 import { CAMERA } from "@/config/camera";
 import { ISLANDS } from "@/config/islands";
@@ -53,6 +56,7 @@ function GameInputs() {
 function App() {
   const keyboardMap = useGameKeyboardMap(); // Carga la lista indexada de teclas (flechas, WASD, etc.)
   const [island] = ISLANDS; // Extrae los datos de la primera isla (isla de proyectos) para renderizarla
+  const networkIsland = ISLANDS.find((i) => i.id === "redes"); // Extrae los datos de la isla de redes y hoja de vida
 
   return (
     /* PROVEEDOR DE TECLADO: Envuelve toda la app para que cualquier componente pueda capturar pulsaciones */
@@ -62,6 +66,7 @@ function App() {
       <BoundaryWarning />
       <IslandPrompt /> {/* Botón flotante de "Ver Isla" cuando estás cerca */}
       <ProjectPanel /> {/* Modal del portafolio con la lista de proyectos */}
+      <ResumePanel />{" "}
       <SettingsPanel />{" "}
       {/* Panel de configuración inicial con audio e instrucciones */}
       <LoadingScreen />{" "}
@@ -87,7 +92,9 @@ function App() {
           <Island
             position={[island.position[0], island.modelY, island.position[2]]}
             scale={island.modelScale}
+            rotationY={island.rotationY}
           />
+          <IslandRedes island={networkIsland} />{" "}
         </Suspense>
         {/* MUNDO DE FÍSICAS Y COLISIONES (HU09 / @react-three/rapier):
             Envuelve los cuerpos rígidos para calcular contactos y sensores sin detener el resto de la escena */}
@@ -106,6 +113,9 @@ function App() {
           {/* Recorre el arreglo de islas y dibuja sobre cada una su letrero de texto flotante en 3D */}
           {ISLANDS.map((i) => (
             <IslandTitle key={i.id} island={i} />
+          ))}
+          {ISLANDS.map((i) => (
+            <IslandSigns key={i.id} island={i} />
           ))}
         </Suspense>
         {/* GESTIÓN DE CÁMARAS:

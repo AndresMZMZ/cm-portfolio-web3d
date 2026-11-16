@@ -1,29 +1,9 @@
+import ExternalLink from "@/components/ui/ExternalLink";
 import { ISLANDS } from "@/config/islands";
 import { PRACTICES, PROFILE, REPOS } from "@/data/portfolio";
 import { MODES, useGameStore } from "@/store/useGameStore";
 import { useEffect, useRef } from "react";
 import "./ProjectPanel.css";
-
-// SUBCOMPONENTE REUTILIZABLE: ExternalLink
-// Renderiza un enlace seguro a una pestaña nueva o un texto gris si no hay URL disponible.
-function ExternalLink({ href, label }) {
-  // Si no hay una dirección web (!href), rompe el flujo y muestra un mensaje de "Próximamente" estático
-  if (!href) return <span className="pp-soon">Próximamente</span>;
-  
-  // SEGURIDAD EN LA WEB:
-  // target="_blank" abre el enlace en una nueva pestaña del navegador.
-  // rel="noopener noreferrer": impide que la nueva página web acceda a la ventana de tu portafolio 
-  return (
-    <a
-      className="pp-link"
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {label}
-    </a>
-  );
-}
 
 // COMPONENTE PRINCIPAL: ProjectPanel
 // El docente (clase 6) muestra Html con "fullscreen" para poner HTML dentro del Canvas, pero para un panel que

@@ -56,3 +56,27 @@ export const REPOS = [
     url: 'https://github.com/AndresMZMZ/cm-portfolio-web3d' 
   },
 ]
+
+// Redes sociales para los carteles 3D y el panel de la isla de contacto (HU28)
+export const SOCIALS = [
+  { id: 'github', label: 'GitHub', url: 'https://github.com/AndresMZMZ' },
+  { id: 'facebook', label: 'Facebook', url: '' }, // Reemplaza '' con tu enlace real cuando quieras activarlo
+]
+
+// Datos de formación, intereses y enlace a la hoja de vida (HU28)
+export const RESUME = {
+  studies: [
+    {
+      title: 'Ingeniería de Sistemas',
+      place: 'Universidad del Valle, Cali',
+      detail: 'En curso',
+    },
+    {
+      title: 'Diseño de Experiencias Web 3D',
+      place: 'Curso de la carrera',
+      detail: 'Proyecto: este portafolio 3D',
+    },
+  ],
+  interests: ['Fútbol', 'Experiencias web interactivas y 3D'],
+  cvUrl: '', // Pega aquí el enlace a tu CV (Google Drive, PDF en public/, etc.) o déjalo '' para mostrar "Próximamente"
+}
