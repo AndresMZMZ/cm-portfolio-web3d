@@ -6,7 +6,7 @@ import { useGLTF } from "@react-three/drei";
 import { useMemo } from "react";
 import * as THREE from "three";
 
-export function Model(props) {
+export function Model({ rotationY = 0, ...props }) {
   const { nodes, materials } = useGLTF("/models/lighthouse.glb");
   const instancedMeshes = useMemo(() => {
     const cloneInstancedMesh = (mesh) => {
@@ -37,7 +37,7 @@ export function Model(props) {
   }, [nodes, materials]);
 
   return (
-    <group {...props} dispose={null}>
+    <group {...props} rotation={[0, rotationY, 0]} dispose={null}>
       {/* Aquí se manipula la escala y posición de la isla */}
       <group>
         <primitive object={instancedMeshes.lamp} />

@@ -171,7 +171,7 @@ export default function Ship() {
 
   return (
     // Cuerpo rígido del barco: name="ship" permite que FollowCamera y Atmosphere lo rastreen.
-    // colliders={false} desactiva mallas automáticas para usar una sola cápsula de casco.
+    // colliders={false} desactiva mallas automáticas para usar la cápsula definida en config/ship.js.
     // gravityScale={0} y lockRotations bloquean caída y vuelcos; useFrame controla el giro.
     //enabledTranslations: controla qu ejes del espacio puede desplazarse el barco (X y Z, pero no Y).
     <RigidBody
@@ -189,15 +189,31 @@ export default function Ship() {
       onCollisionEnter={handleCollisionEnter}
       onCollisionExit={handleCollisionExit}
     >
-      {/* Cápsula vertical (eje Y); rotation X de 90 grados la acuesta a lo largo del barco (eje Z).
-          friction 0: al chocar en diagonal con una isla el barco resbala en vez de frenarse en seco. */}
-      <CapsuleCollider
-        args={[SHIP.colliderHalfLength, SHIP.colliderRadius]}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={SHIP.colliderOffset}
-        friction={0}
-        restitution={0}
-      />
+      {SHIP.colliders.map((c, index) => {
+        const radius = Math.min(
+          (c.right - c.left) / 2,
+          (c.top - c.bottom) / 2,
+        );
+        const halfHeight = Math.max(
+          0.1,
+          (c.front - c.back) / 2 - radius,
+        );
+
+        return (
+          <CapsuleCollider
+            key={`${c.label ?? index}:${c.left},${c.right},${c.back},${c.front},${c.bottom},${c.top}`}
+            args={[halfHeight, radius]}
+            rotation={[Math.PI / 2, 0, 0]}
+            position={[
+              (c.left + c.right) / 2,
+              (c.bottom + c.top) / 2,
+              (c.back + c.front) / 2,
+            ]}
+            friction={0}
+            restitution={0}
+          />
+        );
+      })}
       {/* CONTENEDOR DE VAIVÉN Y CORRECCIÓN VISUAL:
           swayRef aplica el baiben  y balanceo de las olas (HU08).
           El grupo interno aplica el desfase de rotación (MODEL_YAW_OFFSET) y la altura 'waterline'. */}

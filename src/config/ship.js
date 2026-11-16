@@ -9,11 +9,18 @@ export const SHIP = {
   spawnDistance: 900, // Distancia en unidades 3D a la que aparecerá el barco respecto a la isla principal
   waterline: 5,     // Altura de flotación del barco (qué tan hundido o elevado está respecto al agua)
 
-// Parámetros de la cápsula de colisión (CapsuleCollider en Ship.jsx) (HU09):
-// Se usa una cápsula acostada en vez de una caja para que el barco deslice suavemente al rozar esquinas.
-  colliderHalfLength: 54, // mitad de la longitud del casco del barco
-  colliderRadius: 20,     // Radio de la cápsula del casco del barco
-  colliderOffset: [0, 10, 0], // Desplazamiento del colisionador respecto al centro del barco (X, Y, Z)
+  // Bordes del colisionador del casco (CuboidCollider en Ship.jsx), relativos al centro del barco.
+  colliders: [
+    {
+      label: 'casco',
+      left: -18,   // borde izquierdo (-X, babor)
+      right: 18,   // borde derecho (+X, estribor)
+      back: -58,   // borde delantero hacia donde avanza (-Z, proa)
+      front: 79,   // borde trasero (+Z, popa); extendido para cubrir bien la popa
+      bottom: -12, // borde inferior (-Y, quilla bajo el agua)
+      top: 22,     // borde superior (+Y, cubierta)
+    },
+  ],
 
 // Vaivén del barco combinado con el oleaje (HU08). Súbelos para un balanceo más visible.
   swayHeave: 1.5, // subida y bajada vertical
