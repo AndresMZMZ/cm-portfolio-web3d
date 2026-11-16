@@ -14,11 +14,11 @@ export default function IslandTitle({ island }) {
   if (!island.title) return null;
 
   return (
-    // El docente (clase 6) usa Text de drei; lo dejamos siempre montado y solo alternamos "visible",
+    // El profe en la (clase 6) usa Text de drei; lo dejamos siempre montado y solo alternamos "visible",
     // porque montar y desmontar el texto en cada acercamiento recrea la malla y puede congelarse
     <group position={island.position} visible={visible}>
         <Text
-          font={TITLE_FONT}//tipografía
+          font={TITLE_FONT}
           position={island.titleOffset}
           fontSize={18}
           color="#f8fafc"

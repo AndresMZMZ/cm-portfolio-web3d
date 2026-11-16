@@ -1,7 +1,7 @@
 // CONFIGURACIÓN FÍSICA Y VISUAL DEL FARO (LIGHTHOUSE)
 export const LIGHTHOUSE = {
   // UBICACIÓN EXACTA DEL FOCO EN EL ESPACIO 3D:
-  lampPosition: [15, 203, -32], 
+  lampPosition: [15.124, 197.208, -33.261],
 
   // DIMENSIONES DEL HAZ DE LUZ VOLUMÉTRICO:
   beamLength: 420,            // Alcance/Largo del haz: Qué tan lejos se proyecta el cono de luz en el horizonte
@@ -11,7 +11,7 @@ export const LIGHTHOUSE = {
   period: 8,                  
 
   // ATRIBUTOS LUMÍNICOS:
-  color: '#fff1c2',           // Tono de la luz
+  color: '#fff1c2',         // Tono de la luz
   intensity: 0.9,             // Opacidad visual:el efecto de niebla/polvo iluminado
   spotIntensity: 3000,        // Intensidad de la luz física (SpotLight) que ilumina dinámicamente el barco y el agua al pasar
 

@@ -1,9 +1,10 @@
+import { wavesToGlsl } from "@/utils/waves";
 import { useFrame } from "@react-three/fiber";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
 //  CONFIGURACIÓN DEL ENTORNO DEL OCÉANO:
-const OCEAN_SIZE = 8000;     // Extensión (ancho por largo). Reducir el tamaño del plano si va mal en cp sin targeta grafica
+const OCEAN_SIZE = 8000;     // Extensión (ancho por largo).
 const OCEAN_SEGMENTS = 512; // Densidad de la malla (subdivisiones); a mayor valor, más detalle en las olas.
 
 // PARÁMETROS DEL MAR (Variables de control estético y visual):
@@ -42,16 +43,14 @@ const VERTEX_DECLARATIONS = /* glsl */ `
   void waveCalc(vec2 p, out float h, out vec2 g) {
     h = 0.0;
     g = vec2(0.0);
-    addWave(p, vec2(1.0, 0.4),  0.05, 0.45, 1.0, h, g);  // Ola macro (Lenta y masiva)
-    addWave(p, vec2(-0.3, 1.0), 0.11, 0.25, 1.4, h, g);  // Ola media (Dirección transversal)
-    addWave(p, vec2(0.7, -0.8), 0.23, 0.12, 2.0, h, g);  // Ola micro (Rápida y superficial)
+    ${wavesToGlsl()}
   }
 `;
 
 /**
  * ╔══════════════════════════════════════════════════════════════════════════╗
  * ║ FRAGMENT DECLARATIONS (GLSL)                                             ║
- * ║ Calcula el color píxel a píxel, combinando agua profunda, espuma y sol. ║
+ * ║ Calcula el color píxel a píxel, combinando agua profunda, espuma y sol.  ║
  * ╚══════════════════════════════════════════════════════════════════════════╝
  */
 const FRAGMENT_DECLARATIONS = /* glsl */ `
@@ -87,12 +86,18 @@ const FRAGMENT_DECLARATIONS = /* glsl */ `
 `;
 
 export default function Ocean() {
+  const shaderRef = useRef(null);
   
-  //  INYECCIÓN DE SHADERS "sombreado" (onBeforeCompile):
+  // "sombreado" (onBeforeCompile):
   // El material se genera una sola vez. Modificamos el MeshStandardMaterial nativo de Three.js 
-  // inyectando nuestro código GLSL personalizado en puntos clave de su ciclo de compilación.
+  // insertando nuestro código GLSL personalizado en puntos clave de su ciclo de compilación.
   const material = useMemo(() => {
-    const m = new THREE.MeshStandardMaterial({ roughness: 0.15, metalness: 0 });
+    const m = new THREE.MeshStandardMaterial({
+      roughness: 0.15,
+      metalness: 0,
+      transparent: true,
+      opacity: 0.85,
+    });
     
     m.onBeforeCompile = (shader) => {
       // 1. Vinculación de Uniforms (Variables compartidas CPU -> GPU):
@@ -156,30 +161,37 @@ export default function Ocean() {
         );
       
       // Guarda la referencia del shader compilado para actualizarlo dinámicamente
-      m.userData.shader = shader;
+      shaderRef.current = shader;
     };
     return m;
   }, []);
 
   // COMPENSACIÓN DE RENDIMIENTO EN GPU:
-  // A diferencia del método del docente que calcula olas en la CPU (saturando el hilo principal),
+  // A diferencia del método del profesor que calcula olas en la CPU (saturando el hilo principal),
   // aquí los cálculos complejos corren en la tarjeta gráfica a nivel de hardware.
   // useFrame únicamente se encarga de enviar el contador de tiempo global para la animación.
   useFrame(({ clock }) => {
-    const shader = material.userData.shader;
+    const shader = shaderRef.current;
     if (shader) shader.uniforms.uTime.value = clock.elapsedTime;
   });
 
   return (
-    <mesh
-      position-y={5} // Elevación del plano del mar en el eje Y global.
-      rotation={[-Math.PI / 2, 0, 0]} // Rota el plano horizontalmente para que actúe como suelo.
-      receiveShadow
-      material={material}
-    >
-      <planeGeometry
-        args={[OCEAN_SIZE, OCEAN_SIZE, OCEAN_SEGMENTS, OCEAN_SEGMENTS]}
-      />
-    </mesh>
+    <group>
+      <mesh
+        position-y={5} // Elevación del plano del mar en el eje Y global.
+        rotation={[-Math.PI / 2, 0, 0]} // Rota el plano horizontalmente para que actúe como suelo.
+        receiveShadow
+        material={material}
+      >
+        <planeGeometry
+          args={[OCEAN_SIZE, OCEAN_SIZE, OCEAN_SEGMENTS, OCEAN_SEGMENTS]}
+        />
+      </mesh>
+      {/* Ajusta aquí la profundidad y el color del fondo marino. */}
+      <mesh position-y={-40} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[OCEAN_SIZE, OCEAN_SIZE, 1, 1]} />
+        <meshBasicMaterial color="#052336" />
+      </mesh>
+    </group>
   );
 }

@@ -1,4 +1,4 @@
-# El profe solo despliega en Vercel, pero agregamos CI porque detecta errores de lint o build antes de fusionar el PR
+# Agregamos CI porque detecta errores de lint o build antes de fusionar el PR
 name: CI
 
 on:

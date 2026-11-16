@@ -7,8 +7,8 @@ export default function Atmosphere() {
   const lightRef = useRef();
   const shipRef = useRef(null); // Acceso al modelo 3D del barco
   const scene = useThree((s) => s.scene); // Acceso al mundo 3D (THREE.Scene)
-  // Bucle de animación El docente (clase 4) deja la luz en una posición fija con una zona de sombra pequeña, pero hacemos que la luz principal
-  // siga al barco porque si no, al alejarse de esa zona su sombra deja de calcularse.
+  // Bucle de animación (clase 4)  el profe deja la luz en una posición fija con una zona de sombra pequeña, 
+  // pero aca hacemos que la luz principal siga al barco porque si no, al alejarse de esa zona su sombra deja de calcularse.
   useFrame(() => {
     const light = lightRef.current;
     if (!light) return;
@@ -28,7 +28,7 @@ export default function Atmosphere() {
   return (
     <>
       {/* Para probar otros ambientes, cambia la dispersión de (rayleigh) entre
-          0.5 (cálido) y 6 (más azul). La distancia (distance) debe superar el área
+          0.5 (cálido) y 6 (más azul). La distancia debe superar el área
           visible; la neblina (turbidity) controla la bruma. */}
       <Sky
         distance={10000}
@@ -38,13 +38,12 @@ export default function Atmosphere() {
         mieCoefficient={0.005}
         mieDirectionalG={0.8}
       />
-      {/* El docente usa luz ambiental (ambientLight); aquí usamos luz hemisférica
-          (hemisphereLight), que aporta color de cielo arriba y de mar abajo. */}
+      {/* El profe usa luz ambiental (ambientLight); aquí usamos luz hemisférica
+          (hemisphereLight), que aporta color de cielo arriba y por debajo del mar. */}
       {/* Los valores son: color del cielo, color del suelo y fuerza de la luz. */}
       <hemisphereLight args={["#ffe2c2", "#2a5578", 1.3]} />
-      {/*  OPTIMIZACIÓN DE SOMBRAS (RENDIMIENTO Y CALIDAD):  
-  1. shadow-mapSize: Define la resolución. Valores más altos (2048) 
-     dan nitidez pero consumen más GPU; valores más bajos (512) pixelan la sombra.     
+      {/*  OPTIMIZACIÓN DE SOMBRAS:  
+  1. shadow-mapSize: Define la resolución. Valores más altos,dan nitidez pero consumen más GPU; valores más bajos pixelan la sombra.     
   2. shadow-camera: Define la caja invisible de captura para proyectar sombras.
      - left/right/top/bottom (-30 a 30): Si un objeto sale de este rango, su sombra desaparece.
      - near/far (1 a 200): Establecen la distancia mínima y máxima de profundidad del cálculo.     

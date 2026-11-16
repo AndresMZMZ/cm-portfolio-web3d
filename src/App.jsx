@@ -1,13 +1,20 @@
 import Atmosphere from "@/components/canvas/Atmosphere";
 import FollowCamera from "@/components/canvas/FollowCamera";
 import Island from "@/components/canvas/Island";
+import IslandColliders from "@/components/canvas/IslandColliders";
+import IslandRedes from "@/components/canvas/IslandRedes";
+import IslandSigns from "@/components/canvas/IslandSigns";
 import IslandTitle from "@/components/canvas/IslandTitle";
 import LighthouseBeam from "@/components/canvas/LighthouseBeam";
 import Ocean from "@/components/canvas/Ocean";
 import Ship from "@/components/canvas/Ship";
+import WorldBounds from "@/components/canvas/WorldBounds";
+import BoundaryWarning from "@/components/ui/BoundaryWarning";
 import IslandPrompt from "@/components/ui/IslandPrompt";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import ProjectPanel from "@/components/ui/ProjectPanel";
+import ResumePanel from "@/components/ui/ResumePanel";
+import SettingsPanel from "@/components/ui/SettingsPanel";
 import { CAMERA } from "@/config/camera";
 import { ISLANDS } from "@/config/islands";
 import { useGameKeyboardMap } from "@/config/keyboardMap";
@@ -15,6 +22,7 @@ import { SHIP_SPAWN_POSITION } from "@/config/ship";
 import { useModeKeys } from "@/hooks/useModeKeys";
 import { KeyboardControls, OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { Physics } from "@react-three/rapier";
 import { Suspense } from "react";
 import "./App.css"; // Vincula los estilos globales de tamaño y visor dinámico
 
@@ -34,7 +42,7 @@ const DEBUG_CAMERA_POSITION = [
 // PUNTO DE MIRA DE CÁMARA LIBRE (Hacia dónde apunta el lente en modo debug):
 const DEBUG_CAMERA_TARGET = [
   SHIP_SPAWN_POSITION[0], // Mira al centro X del barco
-  SHIP_SPAWN_POSITION[1] + CAMERA.lookHeight, // Eleva la mirada para incluir las montañas/faro
+  SHIP_SPAWN_POSITION[1] + CAMERA.lookHeight, // Eleva la mirada para incluir mas en el horizonte
   SHIP_SPAWN_POSITION[2] - CAMERA.lookAhead, // El barco avanza hacia -Z; mira hacia delante, hacia la isla.
 ];
 
@@ -48,14 +56,19 @@ function GameInputs() {
 function App() {
   const keyboardMap = useGameKeyboardMap(); // Carga la lista indexada de teclas (flechas, WASD, etc.)
   const [island] = ISLANDS; // Extrae los datos de la primera isla (isla de proyectos) para renderizarla
+  const networkIsland = ISLANDS.find((i) => i.id === "redes"); // Extrae los datos de la isla de redes y hoja de vida
 
   return (
     /* PROVEEDOR DE TECLADO: Envuelve toda la app para que cualquier componente pueda capturar pulsaciones */
     <KeyboardControls map={keyboardMap}>
       {/* CAPTAS DE ENTRADA Y COMPONENTES DE INTERFAZ HTML (Viven fuera del Canvas 3D) */}
       <GameInputs />
+      <BoundaryWarning />
       <IslandPrompt /> {/* Botón flotante de "Ver Isla" cuando estás cerca */}
       <ProjectPanel /> {/* Modal del portafolio con la lista de proyectos */}
+      <ResumePanel />{" "}
+      <SettingsPanel />{" "}
+      {/* Panel de configuración inicial con audio e instrucciones */}
       <LoadingScreen />{" "}
       {/* Pantalla negra inicial con la brújula dorada de carga */}
       {/* LIENZO GRÁFICO PRINCIPAL (CANVAS DE THREE.JS) Todo lo que esté dentro de esta etiqueta se procesará mediante WebGL / Tarjeta Gráfica.*/}
@@ -70,7 +83,7 @@ function App() {
         {/* ENTORNO, OCÉANO Y EFECTOS VISUALES */}
         <Atmosphere />{" "}
         {/* Luces solares, ambientales y color del domo del cielo */}
-        <Ocean /> /* El agua con movimiento de olas */
+        <Ocean /> {/* El agua con movimiento de olas */}
         <LighthouseBeam /> {/* El cono volumétrico de luz rotativo del faro */}
         {/* CONTENEDORES DE ESPERA (Suspense): 
             Evitan que el juego se rompa o se congele mientras los archivos pesados (.glb / fuentes) se descargan */}
@@ -79,16 +92,30 @@ function App() {
           <Island
             position={[island.position[0], island.modelY, island.position[2]]}
             scale={island.modelScale}
+            rotationY={island.rotationY}
           />
+          <IslandRedes island={networkIsland} />{" "}
         </Suspense>
+        {/* MUNDO DE FÍSICAS Y COLISIONES (HU09 / @react-three/rapier):
+            Envuelve los cuerpos rígidos para calcular contactos y sensores sin detener el resto de la escena */}
         <Suspense fallback={null}>
-          <Ship />{" "}
-          {/* Renderiza el modelo 3D del barco y activa sus controles físicos de movimiento */}
+          {/* El docente usa <Physics debug> siempre, pero usamos debug={DEBUG_CAMERA} porque en producción no se dibujan los colisionadores. */}
+          <Physics debug={DEBUG_CAMERA}>
+            <Ship />{" "}
+            {/* Cuerpo dinámico del barco con cápsula de colisión en el casco */}
+            <IslandColliders />{" "}
+            {/* Cuboides estáticos que rodean la roca y el muelle de cada isla */}
+            <WorldBounds />{" "}
+            {/* Muros perimetrales fijos y sensores de límite del océano */}
+          </Physics>
         </Suspense>
         <Suspense fallback={null}>
           {/* Recorre el arreglo de islas y dibuja sobre cada una su letrero de texto flotante en 3D */}
           {ISLANDS.map((i) => (
             <IslandTitle key={i.id} island={i} />
+          ))}
+          {ISLANDS.map((i) => (
+            <IslandSigns key={i.id} island={i} />
           ))}
         </Suspense>
         {/* GESTIÓN DE CÁMARAS:
