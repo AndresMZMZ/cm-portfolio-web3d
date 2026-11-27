@@ -26,7 +26,7 @@ export const ISLANDS = [
         back: -167,  // borde trasero (-Z, hacia el fondo)
         front: 35,   // borde delantero (+Z, hacia donde nace el barco)
         bottom: -65, // borde inferior (-Y,sumergido bajo el agua)
-        top: 7, // borde superior (+Y)
+        top: 125, // borde superior (+Y)
       },
     ],
   },
