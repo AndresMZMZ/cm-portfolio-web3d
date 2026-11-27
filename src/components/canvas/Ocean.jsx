@@ -1,11 +1,13 @@
+import { createOceanDiscGeometry } from "@/utils/oceanGeometry";
 import { wavesToGlsl } from "@/utils/waves";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
 
 //  CONFIGURACIÓN DEL ENTORNO DEL OCÉANO:
-const OCEAN_SIZE = 8000;     // Extensión (ancho por largo).
-const OCEAN_SEGMENTS = 512; // Densidad de la malla (subdivisiones); a mayor valor, más detalle en las olas.
+const OCEAN_RADIUS = 8500; // Deja 500 unidades de agua después del límite navegable.
+const OCEAN_RINGS = 360;    // Anillos concéntricos; más anillos, más detalle y más peso para la GPU.
+const OCEAN_SEGMENTS = 360; // Vértices por anillo.
 
 // PARÁMETROS DEL MAR (Variables de control estético y visual):
 const SEA = {
@@ -175,6 +177,12 @@ export default function Ocean() {
     if (shader) shader.uniforms.uTime.value = clock.elapsedTime;
   });
 
+  const geometry = useMemo(
+    () => createOceanDiscGeometry(OCEAN_RADIUS, OCEAN_RINGS, OCEAN_SEGMENTS),
+    [],
+  );
+  useEffect(() => () => geometry.dispose(), [geometry]);
+
   return (
     <group>
       <mesh
@@ -182,14 +190,11 @@ export default function Ocean() {
         rotation={[-Math.PI / 2, 0, 0]} // Rota el plano horizontalmente para que actúe como suelo.
         receiveShadow
         material={material}
-      >
-        <planeGeometry
-          args={[OCEAN_SIZE, OCEAN_SIZE, OCEAN_SEGMENTS, OCEAN_SEGMENTS]}
-        />
-      </mesh>
+        geometry={geometry}
+      />
       {/* Ajusta aquí la profundidad y el color del fondo marino. */}
       <mesh position-y={-40} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[OCEAN_SIZE, OCEAN_SIZE, 1, 1]} />
+        <circleGeometry args={[OCEAN_RADIUS, 96]} />
         <meshBasicMaterial color="#052336" />
       </mesh>
     </group>

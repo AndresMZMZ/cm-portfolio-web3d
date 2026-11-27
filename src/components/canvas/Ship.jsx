@@ -18,16 +18,16 @@ const MODEL_YAW_OFFSET = Math.PI / 2;
 
 function isValidPosition({ x, y, z }) {
   const { left, right, back, front, bottom, top } = WORLD.bounds;
+  const centerX = (left + right) / 2;
+  const centerZ = (back + front) / 2;
+  const radius = Math.min((right - left) / 2, (front - back) / 2);
   return (
     Number.isFinite(x) &&
     Number.isFinite(y) &&
     Number.isFinite(z) &&
-    x >= left &&
-    x <= right &&
     y >= bottom &&
     y <= top &&
-    z >= back &&
-    z <= front
+    (x - centerX) ** 2 + (z - centerZ) ** 2 <= radius ** 2
   );
 }
 

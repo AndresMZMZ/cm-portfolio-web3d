@@ -77,7 +77,8 @@ function App() {
         camera={{
           position: DEBUG_CAMERA ? DEBUG_CAMERA_POSITION : [0, 22, 22],
           fov: 50, // Campo de visión (Field of View): Ángulo de apertura del lente de la cámara
-          far: 15000, // Distancia de corte lejana: Límite máximo del horizonte visible antes de recortar objetos
+          near: 1,
+          far: 30000, // Deja margen para ver el océano al alejar la cámara en modo debug.
         }}
       >
         {/* ENTORNO, OCÉANO Y EFECTOS VISUALES */}
