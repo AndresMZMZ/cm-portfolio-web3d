@@ -28,10 +28,10 @@ export default function Atmosphere() {
   return (
     <>
       {/* Para probar otros ambientes, cambia la dispersión de (rayleigh) entre
-          0.5 (cálido) y 6 (más azul). La distancia debe superar el área
-          visible; la neblina (turbidity) controla la bruma. */}
+          0.5 (cálido) y 6 (más azul). La distancia mantiene la caja del cielo
+          fuera del área navegable; la neblina (turbidity) controla la bruma. */}
       <Sky
-        distance={10000}
+        distance={100000}
         sunPosition={SUN_POSITION}
         turbidity={8}
         rayleigh={1}

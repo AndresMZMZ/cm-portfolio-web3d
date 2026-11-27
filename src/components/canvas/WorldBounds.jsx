@@ -3,73 +3,63 @@ import { useGameStore } from "@/store/useGameStore";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
 import { useRef } from "react";
 
-// Bordes (Bounds) del mundo (HU09): 4 muros fijos que detienen el barco que activan el aviso "Regresa al mar abierto" (clase 07: sensor + onIntersectionEnter).
+const BOUNDARY_SEGMENTS = 96;
+const SEGMENT_OVERLAP = 1;
+
+function createRingColliders({ label, centerX, centerY, centerZ, radius, halfRadial, halfY }) {
+  const halfSegment = radius * Math.tan(Math.PI / BOUNDARY_SEGMENTS) + SEGMENT_OVERLAP;
+
+  return Array.from({ length: BOUNDARY_SEGMENTS }, (_, index) => {
+    const angle = (index / BOUNDARY_SEGMENTS) * Math.PI * 2;
+    return {
+      label: `${label}-${index}`,
+      position: [
+        centerX + Math.cos(angle) * radius,
+        centerY,
+        centerZ + Math.sin(angle) * radius,
+      ],
+      rotation: [0, -angle, 0],
+      halfExtents: [halfRadial, halfY, halfSegment],
+    };
+  });
+}
+
+// Límite circular del mundo: segmentos fijos detienen el barco y sensores interiores activan el aviso.
 export default function WorldBounds() {
   const setOutOfBounds = useGameStore((s) => s.setOutOfBounds);
-  // En una esquina el barco toca dos franjas a la vez; se cuentan para apagar el aviso solo al salir de ambas.
+  // Se cuentan los sensores ocupados para mantener el aviso activo hasta salir de toda la franja.
   const inside = useRef(0);
 
-  // - wallHalfThickness (Grosor de muros): para evitar que el barco atraviese el borde.
-  //- warningDistance (Franja de aviso): Define a que distancia del muro se activa la advertencia "Regresa al mar abierto".
   const { left, right, back, front, bottom, top } = WORLD.bounds;
   const { wallHalfThickness: thick, warningDistance: warn } = WORLD;
 
-  // Cálculo de centros y mitades desde los 6 bordes independientes de config/world.js
+  // Conserva los límites configurados; el menor semieje define un círculo que cabe dentro de ellos.
   const centerX = (left + right) / 2;
   const centerY = (bottom + top) / 2;
   const centerZ = (back + front) / 2;
   const halfX = Math.abs(right - left) / 2;
   const halfY = Math.abs(top - bottom) / 2;
   const halfZ = Math.abs(front - back) / 2;
+  const radius = Math.min(halfX, halfZ);
 
-  // Paredes o (walls): detienen físicamente el casco del barco en los 4 puntos cardinales
-  const walls = [
-    {
-      label: "este",
-      position: [right + thick, centerY, centerZ],// Ubica el muro justo después del borde derecho (+X) para detener el barco
-      halfExtents: [thick, halfY, halfZ + thick * 2],// Define el grosor y extiende el largo para sellar las esquinas sin dejar huecos
-    },
-    {
-      label: "oeste",
-      position: [left - thick, centerY, centerZ],
-      halfExtents: [thick, halfY, halfZ + thick * 2],
-    },
-    {
-      label: "sur",
-      position: [centerX, centerY, front + thick],
-      halfExtents: [halfX, halfY, thick],
-    },
-    {
-      label: "norte",
-      position: [centerX, centerY, back - thick],
-      halfExtents: [halfX, halfY, thick],
-    },
-  ];
-  
-  // Franjas sensoras interiores (sensor): detectan la entrada del barco antes del muro sin frenarlo
-  const warnHalf = warn / 2;
-  const warningZones = [
-    {
-      label: "zona-este",
-      position: [right - warnHalf, centerY, centerZ],// Ubica la franja de aviso justo antes del borde derecho (+X) para activar el aviso
-      halfExtents: [warnHalf, halfY, halfZ],// Define la mitad del grosor de la franja y extiende el largo para cubrir toda la altura y profundidad
-    },
-    {
-      label: "zona-oeste",
-      position: [left + warnHalf, centerY, centerZ],
-      halfExtents: [warnHalf, halfY, halfZ],
-    },
-    {
-      label: "zona-sur",
-      position: [centerX, centerY, front - warnHalf],
-      halfExtents: [halfX, halfY, warnHalf],
-    },
-    {
-      label: "zona-norte",
-      position: [centerX, centerY, back + warnHalf],
-      halfExtents: [halfX, halfY, warnHalf],
-    },
-  ];
+  const walls = createRingColliders({
+    label: "muro",
+    centerX,
+    centerY,
+    centerZ,
+    radius: radius + thick,
+    halfRadial: thick,
+    halfY,
+  });
+  const warningZones = createRingColliders({
+    label: "zona-aviso",
+    centerX,
+    centerY,
+    centerZ,
+    radius: radius - warn / 2,
+    halfRadial: warn / 2,
+    halfY,
+  });
 
   //Filtra el contacto para reaccionar únicamente cuando el cuerpo físico es el barco (name="ship")
   const handleEnter = ({ other }) => {
@@ -90,9 +80,10 @@ export default function WorldBounds() {
       <RigidBody name="world-walls" type="fixed" colliders={false}>
         {walls.map((wall) => (
           <CuboidCollider
-            key={`${wall.label}-${wall.position.join(",")}-${wall.halfExtents.join(",")}`}
+            key={wall.label}
             args={wall.halfExtents}
             position={wall.position}
+            rotation={wall.rotation}
           />
         ))}
       </RigidBody>
@@ -100,9 +91,10 @@ export default function WorldBounds() {
       <RigidBody name="world-warning-zones" type="fixed" colliders={false}>
         {warningZones.map((zone) => (
           <CuboidCollider
-            key={`${zone.label}-${zone.position.join(",")}-${zone.halfExtents.join(",")}`}
+            key={zone.label}
             args={zone.halfExtents}
             position={zone.position}
+            rotation={zone.rotation}
             sensor
             onIntersectionEnter={handleEnter}
             onIntersectionExit={handleExit}
