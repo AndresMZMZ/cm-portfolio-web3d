@@ -1,4 +1,5 @@
 import Atmosphere from "@/components/canvas/Atmosphere";
+import DevRenderInfo from "@/components/canvas/DevRenderInfo";
 import FollowCamera from "@/components/canvas/FollowCamera";
 import Island from "@/components/canvas/Island";
 import IslandColliders from "@/components/canvas/IslandColliders";
@@ -20,7 +21,7 @@ import { ISLANDS } from "@/config/islands";
 import { useGameKeyboardMap } from "@/config/keyboardMap";
 import { SHIP_SPAWN_POSITION } from "@/config/ship";
 import { useModeKeys } from "@/hooks/useModeKeys";
-import { KeyboardControls, OrbitControls } from "@react-three/drei";
+import { KeyboardControls, OrbitControls, Stats } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import { Suspense } from "react";
@@ -31,6 +32,7 @@ import "./App.css"; // Vincula los estilos globales de tamaño y visor dinámico
 const DEBUG_CAMERA =
   import.meta.env.DEV &&
   new URLSearchParams(window.location.search).has("debug");
+const IS_DEV = import.meta.env.DEV;
 
 // CÁLCULO DE CÁMARA LIBRE (Aplica al modo debug la misma posición inicial de la FollowCamera):
 const DEBUG_CAMERA_POSITION = [
@@ -81,6 +83,9 @@ function App() {
           far: 30000, // Deja margen para ver el océano al alejar la cámara en modo debug.
         }}
       >
+        {IS_DEV && <Stats showPanel={0} />}
+        {IS_DEV && <DevRenderInfo />}
+
         {/* ENTORNO, OCÉANO Y EFECTOS VISUALES */}
         <Atmosphere />{" "}
         {/* Luces solares, ambientales y color del domo del cielo */}
