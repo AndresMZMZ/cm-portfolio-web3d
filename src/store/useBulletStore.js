@@ -9,6 +9,8 @@ let nextId = 1
 export const useBulletStore = create((set) => ({
   bullets: [], // Balas en vuelo: { id, position: [x, y, z], velocity: [x, y, z] }
   impacts: [], // Impactos recientes, para dibujar el destello: { id, position, kind, target }
+  aim: { elevation: BULLET.elevation, yaw: 0 }, // Mira del modo cañones (HU13): elevación y giro lateral de la mira, en radianes. Se ajusta con W/S y A/D.
+  setAim: (aim) => set( { aim }), // ACCIÓN: Ajusta la mira del modo cañones con W/S y A/D. 'aim' es un objeto { elevation, yaw } en radianes.
 
   // ACCIÓN: Disparar una bala desde 'position' hacia 'direction' (ambos arreglos [x, y, z]; la dirección debe ir normalizada).
   // Si ya hay maxActive balas, se retira la más antigua.

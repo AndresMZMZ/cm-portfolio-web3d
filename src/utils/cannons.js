@@ -9,6 +9,7 @@ export function getMuzzle(
   shipObject,
   side,
   elevation = BULLET.elevation,
+  yaw = 0,
   out = { position: new THREE.Vector3(), direction: new THREE.Vector3() },
 ) {
   const sign = side === 'left' ? -1 : 1
@@ -17,7 +18,7 @@ export function getMuzzle(
     .applyQuaternion(shipObject.quaternion)
     .add(shipObject.position)
   out.direction
-    .set(sign * Math.cos(elevation), Math.sin(elevation), 0)
+    .set(sign * Math.cos(elevation) * Math.cos(yaw), Math.sin(elevation), -Math.cos(elevation) * Math.sin(yaw))
     .applyQuaternion(shipObject.quaternion)
   return out
 }

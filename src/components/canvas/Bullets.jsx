@@ -1,10 +1,9 @@
 import { BULLET } from "@/config/bullets";
 import { useBulletStore } from "@/store/useBulletStore";
-import { getMuzzle } from "@/utils/cannons";
 import { sampleWave } from "@/utils/waves";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { BallCollider, RigidBody } from "@react-three/rapier";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 // Motor de balas (HT06): cada bala es un cuerpo dinámico de Rapier que cae por gravedad y avisa cuando choca.
 // Debe ir dentro de <Physics> (clase 07). HU13 llamará a fireBullet con getMuzzle; HU14 y HU15 leerán los impactos.
@@ -104,24 +103,6 @@ function ImpactMarker({ impact }) {
 export default function Bullets() {
   const bullets = useBulletStore((s) => s.bullets);
   const impacts = useBulletStore((s) => s.impacts);
-  const scene = useThree((s) => s.scene);
-
-  // SOLO EN DESARROLLO: prueba de disparo mientras no existe el modo cañones (HU13).
-  // B dispara por estribor (derecha) y V por babor (izquierda), con el barco en cualquier modo.
-  // Se elimina cuando HU13 conecte la barra espaciadora.
-  useEffect(() => {
-    if (!import.meta.env.DEV) return;
-    const onKeyDown = (event) => {
-      if (event.repeat) return;
-      const side = event.code === "KeyB" ? "right" : event.code === "KeyV" ? "left" : null;
-      const ship = scene.getObjectByName("ship");
-      if (!side || !ship) return;
-      const { position, direction } = getMuzzle(ship, side);
-      useBulletStore.getState().fireBullet(position.toArray(), direction.toArray());
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [scene]);
 
   return (
     <>
