@@ -142,7 +142,7 @@ export default function Ship() {
 
   const handleCollisionEnter = ({ manifold, other }) => {
     // HT06: las balas no frenan ni bloquean al barco; solo cuentan las colisiones con islas y muros.
-    if (other.RigidBody?.name() === "bullet") return;
+    if (other.RigidBodyObject?.name() === "bullet") return;
     const normal = manifold.normal();
     const outward = new THREE.Vector3(normal.x, 0, normal.z);
     if (!Number.isFinite(outward.x) || !Number.isFinite(outward.z)) return;
