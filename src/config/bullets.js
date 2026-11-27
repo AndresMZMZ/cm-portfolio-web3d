@@ -16,4 +16,11 @@ export const BULLET = {
   // con su propio barco al salir.
   muzzleOffset: 28, // Separación lateral de la boca respecto al centro del barco
   muzzleHeight: 8, // Altura de la boca respecto al centro del barco
+  // HU13: límites y rapidez de la mira. Nombres en inglés: elevationSpeed (rapidez de elevación), aimYawLimit (límite de giro lateral), aimYawSpeed (rapidez de giro), reloadTime (tiempo de recarga).
+  minElevation: 0.1, // Elevación mínima de la mira en radianes (unos 6 grados)
+  maxElevation: 0.9, // Elevación máxima en radianes (unos 52 grados)
+  elevationSpeed: 0.6, // Rapidez con la que W y S cambian la elevación (radianes por segundo)
+  aimYawLimit: 0.5, // Giro lateral máximo de la mira respecto al costado (radianes, unos 29 grados)
+  aimYawSpeed: 0.8, // Rapidez con la que A y D giran la mira (radianes por segundo)
+  reloadTime: 1.2, // Segundos entre un disparo y el siguiente
 }

@@ -17,6 +17,7 @@ export const useGameStore = create((set) => ({
   mode: MODES.INTRO,     // El juego arranca obligatoriamente en la pantalla de carga (INTRO).
   activePanel: null,     // Toma el ID string de la isla cuyo portafolio se está leyendo (ej: 'proyectos').
   nearIsland: null,      // Almacena el ID de la isla si el barco está en su radio de choque, o null si está en alta mar.
+  combatSide: null,      // Lado de los cañones activos (HU13): 'left' (babor), 'right' (estribor) o null si no hay combate.
   outOfBounds: false,    // Bandera booleana (true/false) indica si el barco entró en la franja límite del océano (HU09).
   audioEnabled: true,    // Audio activado (activado = enabled): lo elige el visitante en el panel de HU02 y lo usará HU03 (puedes renombrarla a tu gusto).
   
@@ -37,10 +38,13 @@ export const useGameStore = create((set) => ({
   confirmSettings: () =>
     set((s) => (s.mode === MODES.SETTINGS ? { mode: MODES.NAVIGATION } : s)),
 
-  // ACCIÓN: Entrar en modo de combate (Teclas Q / E)
-  // Regla estricta: Solo permite desenfundar los cañones si el barco se encontraba navegando en mar abierto.
-  startCombat: () =>
-    set((s) => (s.mode === MODES.NAVIGATION ? { mode: MODES.COMBAT } : s)),
+  // ACCIÓN: Activa el modo combate o cambia de flanco (Q: babor, E: estribor). Solo disponible desde navegación en mar abierto o ya en combate.
+  startCombat: (side) =>
+    set((s) =>
+      s.mode === MODES.NAVIGATION || s.mode === MODES.COMBAT
+        ? { mode: MODES.COMBAT, combatSide: side }
+        : s,
+    ),
 
   // ACCIÓN: Desplegar el portafolio de una isla (Teclas Enter / F o clic en el botón)
   // Cambia el modo a PANEL e inyecta el ID correspondiente para saber qué lista de proyectos renderizar en el HTML.
@@ -53,6 +57,6 @@ export const useGameStore = create((set) => ({
     set((s) =>
       s.mode === MODES.INTRO || s.mode === MODES.SETTINGS
         ? s
-        : { mode: MODES.NAVIGATION, activePanel: null },
+        : { mode: MODES.NAVIGATION, activePanel: null, combatSide: null },
     ),
 }))

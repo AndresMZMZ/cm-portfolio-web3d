@@ -12,6 +12,7 @@ import Ocean from "@/components/canvas/Ocean";
 import Ship from "@/components/canvas/Ship";
 import WorldBounds from "@/components/canvas/WorldBounds";
 import BoundaryWarning from "@/components/ui/BoundaryWarning";
+import CombatHud from "@/components/ui/CombatHud";
 import IslandPrompt from "@/components/ui/IslandPrompt";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import ProjectPanel from "@/components/ui/ProjectPanel";
@@ -67,6 +68,7 @@ function App() {
       {/* CAPTAS DE ENTRADA Y COMPONENTES DE INTERFAZ HTML (Viven fuera del Canvas 3D) */}
       <GameInputs />
       <BoundaryWarning />
+      <CombatHud />{/* Muestra el lado activo y las teclas disponibles solo en combate */}
       <IslandPrompt /> {/* Botón flotante de "Ver Isla" cuando estás cerca */}
       <ProjectPanel /> {/* Modal del portafolio con la lista de proyectos */}
       <ResumePanel />{" "}

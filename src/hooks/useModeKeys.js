@@ -15,11 +15,11 @@ export function useModeKeys() {
     // SUSCRIPCIÓN PARA APUNTAR A LA IZQUIERDA (Tecla Q):
     // Cuando se presiona la tecla ('pressed' es true), activa inmediatamente el estado global de combate.
     // 'subscribe' devuelve una función de cancelación (cleanup) que guardamos en 'offLeft'.
-    const offLeft = subscribe((s) => s.aimLeft, (pressed) => pressed && startCombat())
+    const offLeft = subscribe((s) => s.aimLeft, (pressed) => pressed && startCombat('left'))
 
     // SUSCRIPCIÓN PARA APUNTAR A LA DERECHA (Tecla E):
     // Funciona igual que el flanco izquierdo; presionar la tecla inicia la fase de combate (cañones listos).
-    const offRight = subscribe((s) => s.aimRight, (pressed) => pressed && startCombat())
+    const offRight = subscribe((s) => s.aimRight, (pressed) => pressed && startCombat('right'))
 
     // SUSCRIPCIÓN DE CANCELACIÓN / ESCAPE (Tecla Esc):
     // Al presionar Escape, invoca 'backToNavigation' para cerrar menús, paneles de proyectos o salir del modo combate.
