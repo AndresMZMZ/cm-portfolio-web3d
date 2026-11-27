@@ -1,3 +1,4 @@
+import Bullets from "@/components/canvas/Bullets";
 import Atmosphere from "@/components/canvas/Atmosphere";
 import DevRenderInfo from "@/components/canvas/DevRenderInfo";
 import FollowCamera from "@/components/canvas/FollowCamera";
@@ -112,6 +113,8 @@ function App() {
             <IslandColliders />{" "}
             {/* Cuboides estáticos que rodean la roca y el muelle de cada isla */}
             <WorldBounds />{" "}
+            {/*Balas de cañon con gravedad y detección de impactos (HT06)*/}
+            <Bullets /> {""}
             {/* Muros perimetrales fijos y sensores de límite del océano */}
           </Physics>
         </Suspense>
