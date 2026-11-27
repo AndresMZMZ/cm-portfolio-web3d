@@ -6,13 +6,13 @@
   - **Autor:** <a href="https://sketchfab.com/Jake.Hatt" target="_blank">Jake.Hatt</a>
   - **Fuente:** <a href="https://sketchfab.com/3d-models/lighthouse-diorama-de9ba38a375e42619370264a94bdd218" target="_blank">Sketchfab - Lighthouse Diorama</a>
   - **Licencia:** <a href="https://creativecommons.org" target="_blank">CC-BY-4.0</a>
-  - **Modificaciones:** Geometría y texturas optimizadas para web mediante `gltf.report` (compresión Draco y texturas WebP a 1024px) e integrado con `gltfjsx`.
+  - **Modificaciones:** Geometría y texturas optimizadas para web mediante `@gltf-transform/cli@4 optimize` (compresión Draco y texturas WebP a 1024px) e integrado con `gltfjsx`.
 
 - **The Black Pearl (`barco-prueba.glb`):**
   - **Autor:** <a href="https://sketchfab.com/LakoGibibi" target="_blank">LakoGibibi</a>
   - **Fuente:** <a href="https://sketchfab.com/3d-models/the-black-pearl-997a4cce88564232bd1ff01e2287f2b4" target="_blank">Sketchfab - The Black Pearl</a>
   - **Licencia:** <a href="https://creativecommons.org" target="_blank">CC-BY-4.0</a>
-  - **Modificaciones:** Geometría y texturas optimizadas para web mediante `gltf.report` (compresión Draco y texturas WebP a 1024px) e integrado con `gltfjsx`.
+  - **Modificaciones:** Geometría y texturas optimizadas para web mediante `@gltf-transform/cli@4 optimize` (compresión Draco y texturas WebP a 1024px) e integrado con `gltfjsx`.
 
 ---
 
@@ -49,5 +49,5 @@
   - **Autor:** <a href="https://sketchfab.com/Artjoms_Horosilovs" target="_blank">Artjoms Horosilovs</a>
   - **Fuente:** <a href="https://sketchfab.com/3d-models/sea-keep-lonely-watcher-09a15a0c14cb4accaf060a92bc70413d" target="_blank">Sketchfab - Sea Keep "Lonely Watcher"</a>
   - **Licencia:** <a href="https://creativecommons.org" target="_blank">CC-BY-NC-SA-4.0</a>
-  - **Modificaciones:** Separación de mallas en Blender y optimización para web mediante `gltf.report` (compresión Draco y texturas WebP a 1024px).
+  - **Modificaciones:** Separación de mallas en Blender y optimización para web mediante `@gltf-transform/cli@4 optimize` (compresión Draco y texturas WebP a 1024px).
 
