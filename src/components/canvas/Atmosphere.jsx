@@ -1,12 +1,34 @@
 import { SUN_OFFSET, SUN_POSITION } from "@/config/environment";
-import { Sky } from "@react-three/drei";
+import { Sky, useHelper } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
+
+// HT07: los helpers de luces y sombras solo aparecen con ?debug en desarrollo.
+const DEBUG_LIGHTS =
+  import.meta.env.DEV &&
+  new URLSearchParams(window.location.search).has("debug");
 
 export default function Atmosphere() {
   const lightRef = useRef();
   const shipRef = useRef(null); // Acceso al modelo 3D del barco
   const scene = useThree((s) => s.scene); // Acceso al mundo 3D (THREE.Scene)
+  const shadowHelperRef = useRef(null);
+
+  useHelper(DEBUG_LIGHTS && lightRef, THREE.DirectionalLightHelper, 5, "red");
+
+  useEffect(() => {
+    if (!DEBUG_LIGHTS || !lightRef.current) return;
+    const helper = new THREE.CameraHelper(lightRef.current.shadow.camera);
+    scene.add(helper);
+    shadowHelperRef.current = helper;
+    return () => {
+      scene.remove(helper);
+      helper.dispose();
+      shadowHelperRef.current = null;
+    };
+  }, [scene]);
+
   // Bucle de animación (clase 4)  el profe deja la luz en una posición fija con una zona de sombra pequeña, 
   // pero aca hacemos que la luz principal siga al barco porque si no, al alejarse de esa zona su sombra deja de calcularse.
   useFrame(() => {
@@ -23,6 +45,7 @@ export default function Atmosphere() {
     // Apunta el objetivo (target) de la luz directamente hacia la posición del barco
     light.target.position.set(x, 0, z);
     light.target.updateMatrixWorld(); // sin esto el objetivo no se actualiza fuera de la escena
+    shadowHelperRef.current?.update();
   });
 
   return (
