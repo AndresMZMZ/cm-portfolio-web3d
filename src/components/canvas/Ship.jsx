@@ -99,8 +99,9 @@ export default function Ship() {
       sway.rotation.z =
         (w.slopeX * starboardX + w.slopeZ * starboardZ) * SHIP.swayRoll;
     }
-    // FILTRO DE ESTADO: El barco solo se mueve en modo navegación si el jugador está en un menú,(estado único de la HT04)
-    if (useGameStore.getState().mode !== MODES.NAVIGATION) {
+    // El barco puede navegar también durante el combate; solo se inmoviliza en pantallas y paneles.
+    const mode = useGameStore.getState().mode;
+    if (mode !== MODES.NAVIGATION && mode !== MODES.COMBAT) {
       body.setLinvel({ x: 0, y: 0, z: 0 }, true); // Detiene el movimiento lineal del barco
       return;
     }
@@ -142,7 +143,7 @@ export default function Ship() {
 
   const handleCollisionEnter = ({ manifold, other }) => {
     // HT06: las balas no frenan ni bloquean al barco; solo cuentan las colisiones con islas y muros.
-    if (other.RigidBody?.name() === "bullet") return;
+    if (other.RigidBodyObject?.name() === "bullet") return;
     const normal = manifold.normal();
     const outward = new THREE.Vector3(normal.x, 0, normal.z);
     if (!Number.isFinite(outward.x) || !Number.isFinite(outward.z)) return;
@@ -219,16 +220,16 @@ export default function Ship() {
       {/* CONTENEDOR DE VAIVÉN Y CORRECCIÓN VISUAL:
           swayRef aplica el vaivén  y balanceo de las olas (HU08).
           El grupo interno aplica el desfase de rotación (MODEL_YAW_OFFSET) y la altura 'waterline'. */}
-        <group ref={swayRef}>
-          <group rotation={[0, MODEL_YAW_OFFSET, 0]} position-y={-SHIP.waterline}>
-        {/* ENCAPSULADOR DE CENTRADO DE DREI:
-            El atributo 'top' alinea la parte inferior del modelo 3D exactamente en el punto Y=0.
-          */}
-        <Center top>
-          {/* El archivo 3D de la malla/geometría del barco */}
-          <BarcoPrueba />
-        </Center>
-      </group>
+      <group ref={swayRef}>
+        <group rotation={[0, MODEL_YAW_OFFSET, 0]} position-y={-SHIP.waterline}>
+          {/* ENCAPSULADOR DE CENTRADO DE DREI:
+              El atributo 'top' alinea la parte inferior del modelo 3D exactamente en el punto Y=0.
+            */}
+          <Center top>
+            {/* El archivo 3D de la malla/geometría del barco */}
+            <BarcoPrueba />
+          </Center>
+        </group>
       </group>
     </RigidBody>
   );

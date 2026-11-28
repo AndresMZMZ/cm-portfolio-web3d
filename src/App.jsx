@@ -1,4 +1,6 @@
 import Bullets from "@/components/canvas/Bullets";
+import CombatControls from "@/components/canvas/CombatControls";
+import AimReticle from "@/components/canvas/AimReticle";
 import Atmosphere from "@/components/canvas/Atmosphere";
 import DevRenderInfo from "@/components/canvas/DevRenderInfo";
 import FollowCamera from "@/components/canvas/FollowCamera";
@@ -9,15 +11,18 @@ import IslandSigns from "@/components/canvas/IslandSigns";
 import IslandTitle from "@/components/canvas/IslandTitle";
 import LighthouseBeam from "@/components/canvas/LighthouseBeam";
 import Ocean from "@/components/canvas/Ocean";
+import SalvoController from "@/components/canvas/SalvoController";
 import Ship from "@/components/canvas/Ship";
 import WorldBounds from "@/components/canvas/WorldBounds";
 import BoundaryWarning from "@/components/ui/BoundaryWarning";
+import CombatHud from "@/components/ui/CombatHud";
 import IslandPrompt from "@/components/ui/IslandPrompt";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import ProjectPanel from "@/components/ui/ProjectPanel";
 import ResumePanel from "@/components/ui/ResumePanel";
 import SettingsPanel from "@/components/ui/SettingsPanel";
 import { CAMERA } from "@/config/camera";
+import { BULLET } from "@/config/bullets";
 import { ISLANDS } from "@/config/islands";
 import { useGameKeyboardMap } from "@/config/keyboardMap";
 import { SHIP_SPAWN_POSITION } from "@/config/ship";
@@ -67,6 +72,7 @@ function App() {
       {/* CAPTAS DE ENTRADA Y COMPONENTES DE INTERFAZ HTML (Viven fuera del Canvas 3D) */}
       <GameInputs />
       <BoundaryWarning />
+      <CombatHud />{/* Muestra el lado activo y las teclas disponibles solo en combate */}
       <IslandPrompt /> {/* Botón flotante de "Ver Isla" cuando estás cerca */}
       <ProjectPanel /> {/* Modal del portafolio con la lista de proyectos */}
       <ResumePanel />{" "}
@@ -107,13 +113,14 @@ function App() {
             Envuelve los cuerpos rígidos para calcular contactos y sensores sin detener el resto de la escena */}
         <Suspense fallback={null}>
           {/* El docente usa <Physics debug> siempre, pero usamos debug={DEBUG_CAMERA} porque en producción no se dibujan los colisionadores. */}
-          <Physics debug={DEBUG_CAMERA}>
+          <Physics debug={DEBUG_CAMERA} timeStep={BULLET.physicsTimeStep}>
             <Ship />{" "}
             {/* Cuerpo dinámico del barco con cápsula de colisión en el casco */}
             <IslandColliders />{" "}
             {/* Cuboides estáticos que rodean la roca y el muelle de cada isla */}
             <WorldBounds />{" "}
             {/*Balas de cañon con gravedad y detección de impactos (HT06)*/}
+            <SalvoController />
             <Bullets /> {""}
             {/* Muros perimetrales fijos y sensores de límite del océano */}
           </Physics>
@@ -127,6 +134,8 @@ function App() {
             <IslandSigns key={i.id} island={i} />
           ))}
         </Suspense>
+        <CombatControls />{/* Captura W/A/S/D y Espacio para mover la mira y disparar */}
+        <AimReticle />{/* Dibuja la línea de trayectoria y el anillo donde caería la bala */}
         {/* GESTIÓN DE CÁMARAS:
             Si entraste en modo debug, monta <OrbitControls> para poder orbitar y arrastrar el mundo con el ratón.
             Si juegas normalmente, monta <FollowCamera />, que persigue cinemáticamente la popa del barco. */}

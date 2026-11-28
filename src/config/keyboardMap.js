@@ -17,8 +17,8 @@ export function useGameKeyboardMap() {
     
     // CONTROL DE LA RETÍCULA DE CAÑONES (Teclas W, A, S, D):
     // Mueven la mira/puntero de disparo de forma independiente a hacia dónde navega el barco.
-    { name: 'targetUp', keys: ['KeyW'] },     // Mover la mira hacia arriba (elevar el cañón)
-    { name: 'targetDown', keys: ['KeyS'] },   // Mover la mira hacia abajo (bajar el cañón)
+    { name: 'targetUp', keys: ['KeyW'] },     // Elevar el cañón y aumentar el alcance estimado
+    { name: 'targetDown', keys: ['KeyS'] },   // Bajar el cañón y reducir el alcance estimado
     { name: 'targetLeft', keys: ['KeyA'] },   // Desplazar la mira hacia la izquierda
     { name: 'targetRight', keys: ['KeyD'] },  // Desplazar la mira hacia la derecha
     
@@ -26,6 +26,7 @@ export function useGameKeyboardMap() {
     // Lógica para apuntar con los cañones laterales del barco y abrir fuego.
     { name: 'aimLeft', keys: ['KeyQ'] },      // Activar los cañones del lado izquierdo (babor) al presionar la Q
     { name: 'aimRight', keys: ['KeyE'] },     // Activar los cañones del lado derecho (estribor) al presionar la E
+    { name: 'aimStern', keys: ['KeyR'] },     // Seleccionar los cañones de popa
     { name: 'fire', keys: ['Space'] },        // Disparar las balas de cañón con la Barra Espaciadora
     { name: 'cancel', keys: ['Escape'] },     // Salir del modo apuntar, cerrar menús o paneles con la tecla Escape    
     
