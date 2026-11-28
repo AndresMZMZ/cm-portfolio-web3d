@@ -1,4 +1,7 @@
 import { MODES, useGameStore } from "@/store/useGameStore";
+import { useBulletStore } from "@/store/useBulletStore";
+import { getRange } from "@/utils/ballistics";
+
 // modo cañones (HU13): muestra el lado activo y las teclas disponibles. Solo aparece en combate.
 // pointerEvents: "none" evita que el cartel bloquee clics sobre el Canvas (igual que BoundaryWarning).
 // Nombres en inglés: SIDE_LABEL (nombre del lado), side (lado activo).
@@ -7,6 +10,9 @@ const SIDE_LABEL = { left: "Babor (izquierda)", right: "Estribor (derecha)" };
 export default function CombatHud() {
   const mode = useGameStore((s) => s.mode);
   const side = useGameStore((s) => s.combatSide);
+  const elevation = useBulletStore((state) => state.aim.elevation); // elevación de la mira en radianes
+  const range = Math.round(getRange(elevation)); // alcance estimado en unidades del mundo
+  const elevationDeg = Math.round((elevation * 180) / Math.PI); // elevación en grados
 
   if (mode !== MODES.COMBAT || !side) return null;
 
@@ -32,7 +38,11 @@ export default function CombatHud() {
     >
       <strong>Cañones de {SIDE_LABEL[side]}</strong>
       <div style={{ fontSize: 14, marginTop: 6 }}>
-        W/S elevar · A/D girar · Espacio disparar · Q/E cambiar de lado · Esc salir
+        Alcance: {range} u · Elevación: {elevationDeg}°
+      </div>
+      <div style={{ fontSize: 14, marginTop: 6 }}>
+        W/S elevar · A/D girar · Espacio disparar · Q/E cambiar de lado · Esc
+        salir
       </div>
     </div>
   );

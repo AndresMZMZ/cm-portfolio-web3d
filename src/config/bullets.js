@@ -23,4 +23,8 @@ export const BULLET = {
   aimYawLimit: 0.5, // Giro lateral máximo de la mira respecto al costado (radianes, unos 29 grados)
   aimYawSpeed: 0.8, // Rapidez con la que A y D giran la mira (radianes por segundo)
   reloadTime: 1.2, // Segundos entre un disparo y el siguiente
-}
+  reticlePoints: 28, // Cantidad de puntos de la línea de trayectoria 
+  reticleRingInner: 6, // Radio interior del anillo en el agua
+  reticleRingOuter: 8, // Radio exterior del anillo en el agua
+  reticleColor: "#ffd27a", // Color de la línea y el anillo
+  }

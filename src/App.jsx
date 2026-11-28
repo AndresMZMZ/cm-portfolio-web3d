@@ -1,5 +1,6 @@
 import Bullets from "@/components/canvas/Bullets";
 import CombatControls from "@/components/canvas/CombatControls";
+import AimReticle from "@/components/canvas/AimReticle";
 import Atmosphere from "@/components/canvas/Atmosphere";
 import DevRenderInfo from "@/components/canvas/DevRenderInfo";
 import FollowCamera from "@/components/canvas/FollowCamera";
@@ -131,6 +132,7 @@ function App() {
           ))}
         </Suspense>
         <CombatControls />{/* Captura W/A/S/D y Espacio para mover la mira y disparar */}
+        <AimReticle />{/* Dibuja la línea de trayectoria y el anillo donde caería la bala */}
         {/* GESTIÓN DE CÁMARAS:
             Si entraste en modo debug, monta <OrbitControls> para poder orbitar y arrastrar el mundo con el ratón.
             Si juegas normalmente, monta <FollowCamera />, que persigue cinemáticamente la popa del barco. */}
