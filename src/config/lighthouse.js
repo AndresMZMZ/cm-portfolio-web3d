@@ -1,7 +1,7 @@
 // CONFIGURACIÓN FÍSICA Y VISUAL DEL FARO (LIGHTHOUSE)
 export const LIGHTHOUSE = {
   // UBICACIÓN EXACTA DEL FOCO EN EL ESPACIO 3D:
-  lampPosition: [15.124, 197.208, -33.261],
+  lampPosition: [15.124, 200.235, -33.261],
 
   // DIMENSIONES DEL HAZ DE LUZ VOLUMÉTRICO:
   beamLength: 420,            // Alcance/Largo del haz: Qué tan lejos se proyecta el cono de luz en el horizonte

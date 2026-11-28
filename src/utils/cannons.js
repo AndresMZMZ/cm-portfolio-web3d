@@ -5,6 +5,7 @@ import * as THREE from 'three'
 // shipObject: el objeto 3D del barco (name="ship"); side: 'left' (babor) o 'right' (estribor);
 // elevation: ángulo de subida en radianes. Se puede pasar 'out' para reutilizar los vectores en cada disparo.
 // El barco avanza por su eje -Z local, así que su costado derecho (estribor) es +X y el izquierdo (babor) es -X.
+// muzzleOffset, muzzleHeight y muzzleZ ubican la boca en el modelo; retícula y disparo usan esta misma función.
 export function getMuzzle(
   shipObject,
   side,
@@ -14,7 +15,7 @@ export function getMuzzle(
 ) {
   const sign = side === 'left' ? -1 : 1
   out.position
-    .set(sign * BULLET.muzzleOffset, BULLET.muzzleHeight, 0)
+    .set(sign * BULLET.muzzleOffset, BULLET.muzzleHeight, BULLET.muzzleZ)
     .applyQuaternion(shipObject.quaternion)
     .add(shipObject.position)
   out.direction

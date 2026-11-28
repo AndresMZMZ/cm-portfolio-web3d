@@ -219,16 +219,16 @@ export default function Ship() {
       {/* CONTENEDOR DE VAIVÉN Y CORRECCIÓN VISUAL:
           swayRef aplica el vaivén  y balanceo de las olas (HU08).
           El grupo interno aplica el desfase de rotación (MODEL_YAW_OFFSET) y la altura 'waterline'. */}
-        <group ref={swayRef}>
-          <group rotation={[0, MODEL_YAW_OFFSET, 0]} position-y={-SHIP.waterline}>
-        {/* ENCAPSULADOR DE CENTRADO DE DREI:
-            El atributo 'top' alinea la parte inferior del modelo 3D exactamente en el punto Y=0.
-          */}
-        <Center top>
-          {/* El archivo 3D de la malla/geometría del barco */}
-          <BarcoPrueba />
-        </Center>
-      </group>
+      <group ref={swayRef}>
+        <group rotation={[0, MODEL_YAW_OFFSET, 0]} position-y={-SHIP.waterline}>
+          {/* ENCAPSULADOR DE CENTRADO DE DREI:
+              El atributo 'top' alinea la parte inferior del modelo 3D exactamente en el punto Y=0.
+            */}
+          <Center top>
+            {/* El archivo 3D de la malla/geometría del barco */}
+            <BarcoPrueba />
+          </Center>
+        </group>
       </group>
     </RigidBody>
   );

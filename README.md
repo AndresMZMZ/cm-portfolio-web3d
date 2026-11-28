@@ -87,11 +87,12 @@ npm run dev
 | Flecha arriba / abajo      | Avanzar / retroceder con el barco                               |
 | Flecha izquierda / derecha | Girar el barco                                                  |
 | Enter o F                  | Abrir el panel cuando el barco está cerca de una isla           |
-| Q / E                      | Preparar los cañones de babor (izquierda) o estribor (derecha)  |
-| Escape                     | Cerrar el panel o volver a la navegación                        |
+| Q / E                      | Seleccionar los cañones de babor (izquierda) o estribor (derecha) |
+| W / S                      | Subir o bajar la mira de los cañones                            |
+| A / D                      | Girar la mira de los cañones                                    |
+| Espacio                    | Disparar (con tiempo de recarga)                                |
+| Escape                     | Salir del modo cañones o volver a la navegación                 |
 
-> W, A, S, D (mover la mira) y Espacio (disparar) ya tienen tecla asignada, pero la acción llega en el Sprint 3.
->
 > También puedes hacer clic en los carteles de la isla de redes cuando el barco esté cerca.
 
 ### 🐛 Cámara de depuración
