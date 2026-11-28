@@ -4,6 +4,7 @@ import AimReticle from "@/components/canvas/AimReticle";
 import Atmosphere from "@/components/canvas/Atmosphere";
 import DevRenderInfo from "@/components/canvas/DevRenderInfo";
 import FollowCamera from "@/components/canvas/FollowCamera";
+import WorldClock from "@/components/canvas/WorldClock";
 import Island from "@/components/canvas/Island";
 import IslandColliders from "@/components/canvas/IslandColliders";
 import IslandRedes from "@/components/canvas/IslandRedes";
@@ -92,7 +93,9 @@ function App() {
       >
         {IS_DEV && <Stats showPanel={0} />}
         {IS_DEV && <DevRenderInfo />}
-
+        
+        {/*Permite leer el tiempo */}
+        <WorldClock/>
         {/* ENTORNO, OCÉANO Y EFECTOS VISUALES */}
         <Atmosphere />{" "}
         {/* Luces solares, ambientales y color del domo del cielo */}
