@@ -99,8 +99,9 @@ export default function Ship() {
       sway.rotation.z =
         (w.slopeX * starboardX + w.slopeZ * starboardZ) * SHIP.swayRoll;
     }
-    // FILTRO DE ESTADO: El barco solo se mueve en modo navegación si el jugador está en un menú,(estado único de la HT04)
-    if (useGameStore.getState().mode !== MODES.NAVIGATION) {
+    // El barco puede navegar también durante el combate; solo se inmoviliza en pantallas y paneles.
+    const mode = useGameStore.getState().mode;
+    if (mode !== MODES.NAVIGATION && mode !== MODES.COMBAT) {
       body.setLinvel({ x: 0, y: 0, z: 0 }, true); // Detiene el movimiento lineal del barco
       return;
     }

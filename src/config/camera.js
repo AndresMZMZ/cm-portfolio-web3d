@@ -5,6 +5,13 @@ export const CAMERA = {
   lookHeight: 100,       // eleva el punto de enfoque para incluir la isla
   followDamping: 5,   // más alto = la cámara alcanza al barco más rápido
   lookDamping: 8,     // más alto = la mirada gira más rápido
+  focusHeight: 30, // Centro vertical del barco al orbitar
+  minDistance: 150, // Zoom mínimo en unidades del mundo
+  maxDistance: 700, // Zoom máximo en unidades del mundo
+  minPolarAngle: 0.15, // Evita mirar desde debajo del mar
+  maxPolarAngle: 1.5, // Evita pasar por debajo del barco
+  orbitSpeed: 0.005, // Radianes de órbita por píxel arrastrado
+  zoomSpeed: 0.001, // Sensibilidad de la rueda del mouse
   
   // HU13: cámara del modo cañones. Al activar Q o E la cámara rodea el barco y mira hacia el costado elegido.
   // Nombres en inglés: sideDamping (suavizado lateral), combat (combate). Puedes renombrarlos a tu gusto.

@@ -8,21 +8,25 @@ import { useRef } from "react";
 // Motor de balas (HT06): cada bala es un cuerpo dinámico de Rapier que cae por gravedad y avisa cuando choca.
 // Debe ir dentro de <Physics> (clase 07). HU13 llamará a fireBullet con getMuzzle; HU14 y HU15 leerán los impactos.
 // Nombres en inglés: Bullet (bala), ImpactMarker (marcador de impacto), land (aterrizar/impactar), age (edad).
-const IMPACT_DURATION = 0.6; // Segundos que dura el destello de un impacto
-
 function Bullet({ bullet }) {
   const bodyRef = useRef();
   const age = useRef(0); // Segundos de vida acumulados
   const done = useRef(false); // Evita registrar dos veces el mismo impacto
   const wave = useRef({ height: 0, slopeX: 0, slopeZ: 0 }); // Altura de la ola bajo la bala
+  const previousWave = useRef({ height: 0, slopeX: 0, slopeZ: 0 });
+  const previousPosition = useRef(null);
 
-  // Registra el impacto en la posición actual de la bala y la retira.
-  const land = (kind, target) => {
+  // Registra el impacto en su punto de contacto y retira la bala.
+  const land = (kind, target, impactPosition) => {
     const body = bodyRef.current;
     if (!body || done.current) return;
     done.current = true;
     const p = body.translation();
-    useBulletStore.getState().addImpact({ position: [p.x, p.y, p.z], kind, target });
+    useBulletStore.getState().addImpact({
+      position: impactPosition ?? [p.x, p.y, p.z],
+      kind,
+      target,
+    });
     useBulletStore.getState().removeBullet(bullet.id);
   };
 
@@ -31,14 +35,55 @@ function Bullet({ bullet }) {
     if (!body || done.current) return;
     age.current += delta;
     const p = body.translation();
-    // Caída al mar: el océano es un plano de shader sin colisionador, así que se compara la altura con la de la ola.
+    // El océano no tiene collider; se detecta el cruce entre la superficie de dos frames.
     const surface =
       BULLET.seaLevel + sampleWave(p.x, p.z, state.clock.elapsedTime, wave.current).height;
-    if (p.y <= surface) land("sea", "sea");
-    else if (age.current >= BULLET.lifetime) {
+    const previous = previousPosition.current;
+    if (!previous) {
+      previousPosition.current = {
+        x: p.x,
+        y: p.y,
+        z: p.z,
+        time: state.clock.elapsedTime,
+      };
+      if (p.y <= surface) land("sea", "sea", [p.x, surface, p.z]);
+      return;
+    }
+
+    const previousSurface =
+      BULLET.seaLevel +
+      sampleWave(
+        previous.x,
+        previous.z,
+        previous.time,
+        previousWave.current,
+      ).height;
+    const previousClearance = previous.y - previousSurface;
+    const currentClearance = p.y - surface;
+    if (currentClearance <= 0) {
+      if (previousClearance > 0) {
+        const fraction =
+          previousClearance / (previousClearance - currentClearance);
+        land("sea", "sea", [
+          previous.x + (p.x - previous.x) * fraction,
+          previousSurface + (surface - previousSurface) * fraction,
+          previous.z + (p.z - previous.z) * fraction,
+        ]);
+      } else {
+        land("sea", "sea", [p.x, surface, p.z]);
+      }
+      return;
+    }
+    if (age.current >= (bullet.ttl ?? BULLET.minimumLifetime)) {
       done.current = true;
       useBulletStore.getState().removeBullet(bullet.id);
+      return;
     }
+
+    previous.x = p.x;
+    previous.y = p.y;
+    previous.z = p.z;
+    previous.time = state.clock.elapsedTime;
   });
 
   // Colisión con otro cuerpo: se ignoran el propio barco y otras balas; lo demás cuenta como impacto.
@@ -73,30 +118,34 @@ function Bullet({ bullet }) {
   );
 }
 
-// Destello que se agranda y se desvanece en el punto de impacto: azul claro en el mar, naranja en tierra u objetos.
+// X breve en la posición real de impacto, visible sobre el mar y los objetos.
 function ImpactMarker({ impact }) {
-  const meshRef = useRef();
   const age = useRef(0);
-  const color = impact.kind === "sea" ? "#cfe8ff" : "#ff9a3c";
+  const removed = useRef(false);
+  const color = impact.kind === "sea" ? "#00e5ff" : "#ff4949";
 
-  useFrame((state, delta) => {
-    const mesh = meshRef.current;
-    if (!mesh) return;
+  useFrame((_, delta) => {
     age.current += delta;
-    const t = age.current / IMPACT_DURATION;
-    if (t >= 1) {
+    if (age.current >= BULLET.impactMarkerDuration && !removed.current) {
+      removed.current = true;
       useBulletStore.getState().removeImpact(impact.id);
-      return;
     }
-    mesh.scale.setScalar(BULLET.radius * (1 + 5 * t));
-    mesh.material.opacity = 0.8 * (1 - t);
   });
 
   return (
-    <mesh ref={meshRef} position={impact.position}>
-      <sphereGeometry args={[1, 12, 12]} />
-      <meshBasicMaterial color={color} transparent opacity={0.8} depthWrite={false} />
-    </mesh>
+    <group
+      position={[impact.position[0], impact.position[1] + 0.6, impact.position[2]]}
+      rotation-x={-Math.PI / 2}
+    >
+      <mesh rotation-z={Math.PI / 4}>
+        <boxGeometry args={[BULLET.impactMarkSize, 0.8, 0.8]} />
+        <meshBasicMaterial color={color} depthWrite={false} />
+      </mesh>
+      <mesh rotation-z={-Math.PI / 4}>
+        <boxGeometry args={[BULLET.impactMarkSize, 0.8, 0.8]} />
+        <meshBasicMaterial color={color} depthWrite={false} />
+      </mesh>
+    </group>
   );
 }
 

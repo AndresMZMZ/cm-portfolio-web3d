@@ -17,7 +17,7 @@ export const useGameStore = create((set) => ({
   mode: MODES.INTRO,     // El juego arranca obligatoriamente en la pantalla de carga (INTRO).
   activePanel: null,     // Toma el ID string de la isla cuyo portafolio se está leyendo (ej: 'proyectos').
   nearIsland: null,      // Almacena el ID de la isla si el barco está en su radio de choque, o null si está en alta mar.
-  combatSide: null,      // Lado de los cañones activos (HU13): 'left' (babor), 'right' (estribor) o null si no hay combate.
+  combatSide: null,      // Batería activa (HU13): 'left', 'right', 'stern' o null si no hay combate.
   outOfBounds: false,    // Bandera booleana (true/false) indica si el barco entró en la franja límite del océano (HU09).
   audioEnabled: true,    // Audio activado (activado = enabled): lo elige el visitante en el panel de HU02 y lo usará HU03 (puedes renombrarla a tu gusto).
   

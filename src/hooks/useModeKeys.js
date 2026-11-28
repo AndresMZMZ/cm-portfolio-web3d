@@ -21,6 +21,9 @@ export function useModeKeys() {
     // Funciona igual que el flanco izquierdo; presionar la tecla inicia la fase de combate (cañones listos).
     const offRight = subscribe((s) => s.aimRight, (pressed) => pressed && startCombat('right'))
 
+    // Selección de la batería de popa.
+    const offStern = subscribe((s) => s.aimStern, (pressed) => pressed && startCombat('stern'))
+
     // SUSCRIPCIÓN DE CANCELACIÓN / ESCAPE (Tecla Esc):
     // Al presionar Escape, invoca 'backToNavigation' para cerrar menús, paneles de proyectos o salir del modo combate.
     const offCancel = subscribe((s) => s.cancel, (pressed) => pressed && backToNavigation())
@@ -41,8 +44,8 @@ export function useModeKeys() {
     )
 
     // FUNCIÓN DE LIMPIEZA (CLEANUP):
-    // Cuando el componente que invoca este hook se desmonta, se ejecutan estas 4 funciones.
+    // Cuando el componente que invoca este hook se desmonta, se ejecutan las funciones de limpieza.
     // Esto destruye los escuchadores en memoria y evita un error crítico donde las teclas se duplican o se quedan pegadas.
-    return () => { offLeft(); offRight(); offCancel(); offInteract() }
+    return () => { offLeft(); offRight(); offStern(); offCancel(); offInteract() }
   }, [subscribe]) // Se vuelve a ejecutar solo si la función de suscripción base de Drei cambia
 }

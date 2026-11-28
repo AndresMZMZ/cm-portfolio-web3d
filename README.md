@@ -88,9 +88,13 @@ npm run dev
 | Flecha izquierda / derecha | Girar el barco                                                  |
 | Enter o F                  | Abrir el panel cuando el barco está cerca de una isla           |
 | Q / E                      | Seleccionar los cañones de babor (izquierda) o estribor (derecha) |
-| W / S                      | Subir o bajar la mira de los cañones                            |
+| R                          | Seleccionar los cañones de popa                               |
+| W / S                      | Ajustar elevación y alcance estimado de los cañones              |
 | A / D                      | Girar la mira de los cañones                                    |
-| Espacio                    | Disparar (con tiempo de recarga)                                |
+| Arrastrar botón derecho    | Ajustar la mira y el alcance con el movimiento vertical del mouse |
+| Arrastrar botón izquierdo  | Orbitar la cámara alrededor del barco                            |
+| Rueda del mouse            | Acercar o alejar la cámara                                       |
+| Espacio                    | Disparar una salva escalonada (con tiempo de recarga)           |
 | Escape                     | Salir del modo cañones o volver a la navegación                 |
 
 > También puedes hacer clic en los carteles de la isla de redes cuando el barco esté cerca.
@@ -142,6 +146,9 @@ cm-portfolio-web3d/
 │   │   │   ├── 📁 models/            # Componentes de modelos 3D
 │   │   │   │   └── ◈ BarcoPrueba.jsx # Mallas del modelo del barco
 │   │   │   ├── ◈ Atmosphere.jsx      # Cielo e iluminación
+│   │   │   ├── ◈ AimReticle.jsx      # Trayectoria y anillos de alcance
+│   │   │   ├── ◈ Bullets.jsx         # Balas y marcas X de impacto
+│   │   │   ├── ◈ CombatControls.jsx  # Apuntado y salvas de cañones
 │   │   │   ├── ◈ FollowCamera.jsx    # Cámara que sigue al barco
 │   │   │   ├── ◈ Island.jsx          # Modelo de la isla del faro
 │   │   │   ├── ◈ IslandColliders.jsx # Colisionadores de las islas
@@ -150,10 +157,12 @@ cm-portfolio-web3d/
 │   │   │   ├── ◈ IslandTitle.jsx     # Título 3D de la isla
 │   │   │   ├── ◈ LighthouseBeam.jsx  # Haz giratorio del faro
 │   │   │   ├── ◈ Ocean.jsx           # Océano animado
+│   │   │   ├── ◈ SalvoController.jsx # Ejecución escalonada de las salvas
 │   │   │   ├── ◈ Ship.jsx            # Movimiento y colisiones del barco
 │   │   │   └── ◈ WorldBounds.jsx     # Muros y sensores del límite del mundo
 │   │   └── 📁 ui/                    # Interfaz HTML y estilos
 │   │       ├── ◈ BoundaryWarning.jsx # Aviso al acercarse al borde del mundo
+│   │       ├── ◈ CombatHud.jsx        # Estado, alcance y controles de combate
 │   │       ├── ◈ ExternalLink.jsx    # Enlace externo o "Próximamente"
 │   │       ├── ◈ IslandPrompt.jsx    # Botón para abrir la isla cercana
 │   │       ├── ▤ LoadingScreen.css   # Estilos de la pantalla de carga
@@ -164,7 +173,9 @@ cm-portfolio-web3d/
 │   │       ├── ▤ SettingsPanel.css   # Estilos del panel de configuración
 │   │       └── ◈ SettingsPanel.jsx   # Audio e instrucciones de control
 │   ├── 📁 config/                    # Parámetros ajustables de la escena
+│   │   ├── ⌨ bullets.js              # Física, mira y dispersión del disparo
 │   │   ├── ⌨ camera.js               # Configuración de la cámara
+│   │   ├── ⌨ cannons.js              # Distribución de las baterías del barco
 │   │   ├── ⌨ controls.js             # Controles mostrados en el panel de configuración
 │   │   ├── ⌨ environment.js          # Luz y posición del sol
 │   │   ├── ⌨ islands.js              # Datos y posiciones de las islas
@@ -178,8 +189,10 @@ cm-portfolio-web3d/
 │   ├── 📁 hooks/                     # Hooks personalizados
 │   │   └── ⟲ useModeKeys.js          # Acciones de teclado y cambios de modo
 │   ├── 📁 store/                     # Estado global (Zustand)
+│   │   ├── ⊞ useBulletStore.js       # Balas, impactos, mira y salvas pendientes
 │   │   └── ⊞ useGameStore.js         # Estado de navegación e interfaz
 │   ├── 📁 utils/                     # Funciones de utilidad
+│   │   ├── ⌨ cannons.js              # Posiciones y direcciones de las bocas
 │   │   ├── ⌨ islandModel.js          # Preparación y calibración de modelos de isla
 │   │   ├── ⌨ islandProximity.js      # Proximidad y frenado en islas
 │   │   ├── ⌨ signActions.js          # Acción de cada cartel (panel o enlace)

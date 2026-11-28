@@ -8,6 +8,7 @@ export const CONTROLS = [
 
   // HU13: controles del modo cañones.
   { keys: ['Q', 'E'], action: 'Seleccionar los cañones de babor (izquierda) o estribor (derecha)' },
+  { keys: ['R'], action: 'Seleccionar los cañones de popa' },
   { keys: ['W', 'S'], action: 'Subir o bajar la mira de los cañones' },
   { keys: ['A', 'D'], action: 'Girar la mira de los cañones hacia los lados' },
   { keys: ['Espacio'], action: 'Disparar (con unos segundos de recarga)' },

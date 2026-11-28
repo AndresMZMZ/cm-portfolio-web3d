@@ -11,6 +11,7 @@ import IslandSigns from "@/components/canvas/IslandSigns";
 import IslandTitle from "@/components/canvas/IslandTitle";
 import LighthouseBeam from "@/components/canvas/LighthouseBeam";
 import Ocean from "@/components/canvas/Ocean";
+import SalvoController from "@/components/canvas/SalvoController";
 import Ship from "@/components/canvas/Ship";
 import WorldBounds from "@/components/canvas/WorldBounds";
 import BoundaryWarning from "@/components/ui/BoundaryWarning";
@@ -21,6 +22,7 @@ import ProjectPanel from "@/components/ui/ProjectPanel";
 import ResumePanel from "@/components/ui/ResumePanel";
 import SettingsPanel from "@/components/ui/SettingsPanel";
 import { CAMERA } from "@/config/camera";
+import { BULLET } from "@/config/bullets";
 import { ISLANDS } from "@/config/islands";
 import { useGameKeyboardMap } from "@/config/keyboardMap";
 import { SHIP_SPAWN_POSITION } from "@/config/ship";
@@ -111,13 +113,14 @@ function App() {
             Envuelve los cuerpos rígidos para calcular contactos y sensores sin detener el resto de la escena */}
         <Suspense fallback={null}>
           {/* El docente usa <Physics debug> siempre, pero usamos debug={DEBUG_CAMERA} porque en producción no se dibujan los colisionadores. */}
-          <Physics debug={DEBUG_CAMERA}>
+          <Physics debug={DEBUG_CAMERA} timeStep={BULLET.physicsTimeStep}>
             <Ship />{" "}
             {/* Cuerpo dinámico del barco con cápsula de colisión en el casco */}
             <IslandColliders />{" "}
             {/* Cuboides estáticos que rodean la roca y el muelle de cada isla */}
             <WorldBounds />{" "}
             {/*Balas de cañon con gravedad y detección de impactos (HT06)*/}
+            <SalvoController />
             <Bullets /> {""}
             {/* Muros perimetrales fijos y sensores de límite del océano */}
           </Physics>
